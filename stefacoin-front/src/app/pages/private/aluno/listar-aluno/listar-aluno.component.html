@@ -1,0 +1,46 @@
+<p-confirmDialog header="Aviso" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<div class="p-grid" *ngIf="(dadosTabela$ | async) as alunos">
+  <div class="p-col-12 text-center-table">
+    <p-table [value]="alunos">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            Alunos
+            <p-button icon="pi pi-refresh" (onClick)="listar()"></p-button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" pSortableColumn="nome">Nome<p-sortIcon field="nome"></p-sortIcon></th>
+          <th scope="col" pSortableColumn="email">E-mail<p-sortIcon field="email"></p-sortIcon></th>
+          <th scope="col" pSortableColumn="idade">Idade<p-sortIcon field="idade"></p-sortIcon></th>
+          <th scope="col" pSortableColumn="formacao">Formação<p-sortIcon field="formacao"></p-sortIcon></th>
+          <th scope="col">Cursos</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-aluno>
+        <tr>
+          <td>{{aluno.nome}}</td>
+          <td>{{aluno.email}}</td>
+          <td>{{aluno.idade}}</td>
+          <td>{{aluno.formacao}}</td>
+          <td>
+            <p-button *ngIf="aluno?.cursos?.length" title="Mostrar cursos" styleClass="p-button-raised p-button-secondary" icon="pi pi-info-circle" type="button"></p-button>
+          </td>
+          <td>
+            <p-button (onClick)="editar(aluno.id)" styleClass="p-button-raised p-mr-1 p-button-help" title="Editar" icon="pi pi-user-edit" type="button" [disabled]="!(aluno.id === usuario.id || isProfessor)"></p-button>
+            <p-button (onClick)="excluir(aluno)" styleClass="p-button-raised p-ml-1 p-button-danger" title="Excluir" icon="pi pi-trash" type="button" [disabled]="!isProfessor"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="6">
+            Nenhum registro.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

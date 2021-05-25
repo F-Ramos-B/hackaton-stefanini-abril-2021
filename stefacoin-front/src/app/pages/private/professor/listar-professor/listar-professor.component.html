@@ -1,0 +1,42 @@
+<p-confirmDialog header="Aviso" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+<div class="p-grid" *ngIf="(dadosTabela$ | async) as professores">
+  <div class="p-col-12 text-center-table">
+    <p-table [value]="professores">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            Professores
+            <p-button icon="pi pi-refresh" (onClick)="listar()"></p-button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th scope="col" pSortableColumn="nome">Nome<p-sortIcon field="nome"></p-sortIcon></th>
+          <th scope="col" pSortableColumn="email">E-mail<p-sortIcon field="email"></p-sortIcon></th>
+          <th scope="col">Cursos</th>
+          <th scope="col" *ngIf="isProfessor">Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-professor>
+        <tr>
+          <td>{{professor.nome}}</td>
+          <td>{{professor.email}}</td>
+          <td>
+            <p-button *ngIf="professor?.cursos?.length" title="Mostrar cursos" styleClass="p-button-raised p-button-secondary" icon="pi pi-info-circle" type="button"></p-button>
+          </td>
+          <td *ngIf="isProfessor">
+            <p-button (onClick)="editar(professor.id)" styleClass="p-button-raised p-mr-1 p-button-help" title="Editar" icon="pi pi-user-edit" type="button" [disabled]="professor.id !== usuario.id"></p-button>
+            <p-button (onClick)="excluir(professor)" styleClass="p-button-raised p-ml-1 p-button-danger" title="Excluir" icon="pi pi-trash" type="button" [disabled]="professor.id === usuario.id"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="isProfessor ? 4 : 3">
+            Nenhum registro.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

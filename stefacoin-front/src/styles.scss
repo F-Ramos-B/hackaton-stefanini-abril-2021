@@ -1,0 +1,69 @@
+/* You can add global styles to this file, and also import other style files */
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+}
+
+.card-app-content {
+  .p-card, .p-card-header, .p-card-body, .p-card-subheader, .p-card-content, .p-card-footer {
+    padding: 0px !important;
+    padding-top: 0.1px !important;
+    box-shadow: none;
+  }
+  .p-card-body {
+    height: 100%;
+  }
+}
+
+textarea {
+  resize: none;
+}
+
+body .p-inputtext.ng-touched.ng-invalid,
+body p-dropdown.ng-touched.ng-invalid > .ui-dropdown,
+body p-autocomplete.ng-touched.ng-invalid > .ui-autocomplete > .ui-inputtext,
+body p-calendar.ng-touched.ng-invalid > .ui-calendar > .ui-inputtext,
+body p-chips.ng-touched.ng-invalid > .ui-inputtext,
+body p-inputmask.ng-touched.ng-invalid > .ui-inputtext,
+body p-checkbox.ng-touched.ng-invalid .ui-chkbox-box,
+body p-radiobutton.ng-touched.ng-invalid .ui-radiobutton-box,
+body p-inputswitch.ng-touched.ng-invalid .ui-inputswitch,
+body p-listbox.ng-touched.ng-invalid .ui-inputtext,
+body p-multiselect.ng-touched.ng-invalid > .ui-multiselect,
+body p-spinner.ng-touched.ng-invalid > .ui-inputtext,
+body p-selectbutton.ng-touched.ng-invalid .ui-button,
+body p-togglebutton.ng-touched.ng-invalid .ui-button {
+  border: 1px solid #a80000;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.tela-login {
+  min-width: 450px;
+  //width: 40vw;
+  max-width: 20vw;
+}
+
+.text-center-table {
+  th, td {
+    text-align: center !important;
+    vertical-align: middle !important;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

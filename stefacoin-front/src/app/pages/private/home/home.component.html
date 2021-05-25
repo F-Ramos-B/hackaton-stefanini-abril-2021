@@ -1,0 +1,19 @@
+<div class="p-grid">
+  <div class="p-col-12 p-text-center">
+    <h1>Sistema de aulas Hackaton Stefanini</h1>
+    <hr />
+    <h2>Artigo do dia: JSON</h2>
+  </div>
+</div>
+<div class="p-grid">
+  <div class="p-col-12 colunas">
+    Em computação, JSON (pronúncia ['dʒejzən], J-son em inglês), um acrônimo de JavaScript Object Notation, é um formato compacto, de padrão aberto independente, de troca de dados simples e rápida (parsing) entre sistemas, especificado por Douglas Crockford em 2000, que utiliza texto legível a humanos, no formato atributo-valor (natureza auto-descritiva). Isto é, um modelo de transmissão de informações no formato texto, muito usado em web services que usa transferência de estado representacional (REST) e aplicações AJAX, substituindo o uso do XML. O padrão foi especificado em 2000 e, definido em 2013 nos dois padrões concorrentes, RFC7159 e ECMA-404. Em 2017 a RFC8259 substituiu a 7159 e a ECMA-404 foi revisada. O JSON é um formato de troca de dados entre sistemas independente de linguagem de programação derivado do JavaScript.[1][2] Mas a partir de 2017 muitas linguagens de programação incluiram código para gerar, analisar sintaticamente dados em formato JSON e também converter para objetos da linguagem. O tipo de mídia da Internet oficial (MIME) para o JSON é application/jsone nomes de arquivos JSON usam a extensão .json. O RFC 7493 define um perfil restrito de JSON, conhecido como I-JSON (abreviação de "Internet JSON"), que visa superar alguns problemas de interoperabilidade com o JSON. Cada documento I-JSON é um documento JSON válido, mas o contrário não é necessariamente verdade. Apesar de derivado do Javascript, alguns códigos JSON não são considerados Javascript.
+  </div>
+  <div class="p-col-12">
+    <h3><strong class="cursor-pointer" title="Gerar novo JSON" (click)="gerarJSON()">Exemplo de objeto JSON:</strong></h3>
+    <hr />
+    <ng-container *ngIf="(exemplo$ | async) as exemplo">
+      <pre>{{ exemplo | json }}</pre>
+    </ng-container>
+  </div>
+</div>

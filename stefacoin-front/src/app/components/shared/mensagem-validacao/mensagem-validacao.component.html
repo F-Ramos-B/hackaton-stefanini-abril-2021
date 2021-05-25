@@ -1,0 +1,6 @@
+<p-message
+  *ngIf="hasInvalidateType()"
+  [styleClass]="(isInline ? 'p-ml-2 ' : '') + styleClass"
+  [severity]="alertType"
+  [text]="errorMessage">
+</p-message>
