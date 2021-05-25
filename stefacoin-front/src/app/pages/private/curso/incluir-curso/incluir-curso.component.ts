@@ -3,8 +3,9 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { map, mergeAll, toArray } from 'rxjs/operators';
+import { map, mergeAll, tap, toArray } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/components/shared/base.component';
+import { Curso } from 'src/app/models/curso';
 import mensagem from 'src/app/models/mensagem';
 import { Professor } from 'src/app/models/professor';
 import { ProfessorService } from 'src/app/services/professor.service';
@@ -61,10 +62,42 @@ export class IncluirCursoComponent extends BaseComponent implements OnInit {
 
   carregarProfessores() {
     this.professores$ = this.professorService.listar().pipe(
+      // mergeMap(profs => profs.map(Professor.asSelectItem)),
       mergeAll(),
       map(Professor.asSelectItem),
-      toArray()
+      toArray(),
+      tap(() => this.verificarEdicao())
     );
+  }
+
+  verificarEdicao() {
+    if (this.idEdicao) {
+      this.cursoService.buscarPorId(this.idEdicao).pipe(
+        tap(curso => curso.idProfessor = curso.professor.id)
+      ).subscribe(curso => this.tratarEdicaoFormArray(curso));
+    }
+  }
+
+  private tratarEdicaoFormArray(curso: Curso) {
+    console.log(curso);
+    this.aulas.clear();
+    this.cursoForm.get('nome').patchValue(curso.nome);
+    this.cursoForm.get('descricao').patchValue(curso.descricao);
+    this.cursoForm.get('idProfessor').patchValue(curso.idProfessor);
+
+    for (let i = 0; i < curso.aulas.length; i++) {
+      this.aulas.push(this.addAula());
+      //this.aulas.at(i).patchValue(curso.aulas[i]);
+      (this.aulas.at(i).get('topicos') as FormArray).clear();
+
+      for (let j = 0; j < curso.aulas[i].topicos.length; j++) {
+        const topicoAtual = this.aulas.at(i).get('topicos') as FormArray;
+        topicoAtual.push(this.addTopico());
+        //topicoAtual.at(j).get('nome').patchValue(curso.aulas[i].topicos[j]);
+      }
+    }
+
+    this.cursoForm.patchValue(curso)
   }
 
   voltar() {

@@ -8,4 +8,5 @@ export class Curso extends BaseCrudEntity {
   professor?: Professor;
   aulas?: Aula[];
   avaliacoes?: Avaliacao[];
+  idProfessor?: number;
 }

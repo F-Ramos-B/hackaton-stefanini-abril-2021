@@ -15,7 +15,7 @@ export class AlunoGuard extends TipoUsuarioGuard implements CanActivate, CanActi
     
     if (isEdicao) {
       const extras = this.router.getCurrentNavigation().extras?.state;
-      return usuario.id === extras.id || EnumTipoUsuario.is.PROFESSOR(usuario.tipo);
+      return extras.id && usuario.id === extras.id || EnumTipoUsuario.is.PROFESSOR(usuario.tipo);
     }
 
     return true;
