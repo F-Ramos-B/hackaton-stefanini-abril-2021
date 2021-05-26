@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { identity, iif, Observable, of } from 'rxjs';
 import { map, mergeAll, tap, toArray } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/components/shared/base.component';
 import { Curso } from 'src/app/models/curso';
@@ -28,7 +28,7 @@ export class IncluirCursoComponent extends BaseComponent implements OnInit {
     nome: new FormControl(null, Validators.required),
     descricao: new FormControl(null, Validators.required),
     idProfessor: new FormControl(null, Validators.required),
-    aulas: new FormArray([this.addAula()], Validators.required)
+    aulas: new FormArray([this.templateFormAula()], Validators.required)
   });
 
   constructor(
@@ -48,11 +48,16 @@ export class IncluirCursoComponent extends BaseComponent implements OnInit {
   }
 
   validate() {
-    FormUtils.forceValidateAllFormFields(this.cursoForm, this.cadastrar.bind(this));
+    const action = this.idEdicao ? this.editar.bind(this) : this.cadastrar.bind(this);
+    FormUtils.forceValidateAllFormFields(this.cursoForm, action);
   }
 
   cadastrar() {
-    console.log(this.cursoForm.value);
+    this.cursoService.incluir(this.cursoForm.value).subscribe(resposta => this.confirmarOperacao(resposta));
+  }
+
+  editar() {
+    this.cursoService.editar(this.idEdicao, this.cursoForm.value).subscribe(resposta => this.confirmarOperacao(resposta));
   }
 
   confirmarOperacao(resposta: mensagem) {
@@ -66,78 +71,55 @@ export class IncluirCursoComponent extends BaseComponent implements OnInit {
       mergeAll(),
       map(Professor.asSelectItem),
       toArray(),
-      tap(() => this.verificarEdicao())
+      tap(this.idEdicao ? () => this.verificarEdicao() : identity)
     );
   }
 
   verificarEdicao() {
-    if (this.idEdicao) {
-      this.cursoService.buscarPorId(this.idEdicao).pipe(
-        tap(curso => curso.idProfessor = curso.professor.id)
-      ).subscribe(curso => this.tratarEdicaoFormArray(curso));
-    }
+    this.aulas.clear();
+
+    this.cursoService.buscarPorId(this.idEdicao).pipe(
+      tap(curso => curso.idProfessor = curso.professor.id)
+    ).subscribe(curso => this.preencherFormularioEdicao(curso));
   }
 
-  private tratarEdicaoFormArray(curso: Curso) {
-    console.log(curso);
-    this.aulas.clear();
-    this.cursoForm.get('nome').patchValue(curso.nome);
-    this.cursoForm.get('descricao').patchValue(curso.descricao);
-    this.cursoForm.get('idProfessor').patchValue(curso.idProfessor);
-
-    for (let i = 0; i < curso.aulas.length; i++) {
-      this.aulas.push(this.addAula());
-      //this.aulas.at(i).patchValue(curso.aulas[i]);
-      (this.aulas.at(i).get('topicos') as FormArray).clear();
-
-      for (let j = 0; j < curso.aulas[i].topicos.length; j++) {
-        const topicoAtual = this.aulas.at(i).get('topicos') as FormArray;
-        topicoAtual.push(this.addTopico());
-        //topicoAtual.at(j).get('nome').patchValue(curso.aulas[i].topicos[j]);
-      }
-    }
-
-    this.cursoForm.patchValue(curso)
+  preencherFormularioEdicao(curso: Curso) {
+    curso.aulas.forEach(aula => this.aulas.push(this.templateFormAula(aula.topicos.length)));
+    this.cursoForm.patchValue(curso);
   }
 
   voltar() {
-    this.router.navigate(['login']);
+    this.router.navigate(['cursos']);
   }
 
-  getTopicos(control: AbstractControl): AbstractControl[] {
-    return (control.get('topicos') as FormArray).controls;
+  gerarAula() {
+    this.aulas.push(this.templateFormAula());
   }
 
-  addAula() {
-    return new FormGroup({
-      nome: new FormControl(null, Validators.required),
-      descricao: new FormControl(null, Validators.required),
-      duracao: new FormControl(null, Validators.required),
-      topicos: new FormArray([this.addTopico()], Validators.required)
-    });
+  gerarTopico(indexAula: number) {
+    this.getTopicosDeIndiceAula(indexAula).push(this.templateFormTopico());
   }
 
-  addTopico() {
-    return new FormGroup({
-      nome: new FormControl(null, Validators.required)
-    });
-  }
-
-  removerAula(index: number) {
-    this.aulas.removeAt(index);
+  removerAula(indexAula: number) {
+    this.aulas.removeAt(indexAula);
   }
 
   removerTopico(indexAula: number, indexTopico: number) {
-    const topicos = this.aulas.at(indexAula).get('topicos') as FormArray;
-    topicos.removeAt(indexTopico);
+    this.getTopicosDeIndiceAula(indexAula).removeAt(indexTopico);
   }
 
-  newAula() {
-    this.aulas.push(this.addAula());
+  templateFormAula(numTopicos: number = 1) {
+    return new FormGroup({
+      id: new FormControl(null),
+      idCurso: new FormControl(null),
+      nome: new FormControl(null, Validators.required),
+      duracao: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(25)]),
+      topicos: new FormArray(Array.from({ length: numTopicos }, this.templateFormTopico), Validators.required)
+    });
   }
 
-  newTopico(index: number) {
-    (this.aulas.get([index, 'topicos']) as FormArray).push(this.addTopico());
+  templateFormTopico() {
+    return new FormControl(null, Validators.required);
   }
 
   get idProfessor(): FormControl {
@@ -146,6 +128,14 @@ export class IncluirCursoComponent extends BaseComponent implements OnInit {
 
   get aulas(): FormArray {
     return this.cursoForm.get('aulas') as FormArray;
+  }
+
+  getTopicosDeIndiceAula(indexAula: number): FormArray {
+    return (this.aulas.at(indexAula).get('topicos') as FormArray);
+  }
+
+  getTopicosDeAulaControl(aulaControl: AbstractControl): FormArray {
+    return (aulaControl.get('topicos') as FormArray);
   }
 
 }

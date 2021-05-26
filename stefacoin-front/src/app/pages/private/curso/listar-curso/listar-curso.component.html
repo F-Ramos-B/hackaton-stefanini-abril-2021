@@ -24,7 +24,7 @@
           <td>{{curso.professor.nome}}</td>
           <td>
             <p-button (onClick)="detalhar(curso.id)" styleClass="p-button-raised p-mr-1" title="Detalhar" icon="pi pi-info-circle" type="button"></p-button>
-            <p-button (onClick)="editar(curso.id)" styleClass="p-button-raised p-mx-1 p-button-help" title="Editar" icon="pi pi-user-edit" type="button" [disabled]="!isProfessor"></p-button>
+            <p-button (onClick)="editar(curso.id)" styleClass="p-button-raised p-mx-1 p-button-help" title="Editar" icon="pi pi-pencil" type="button" [disabled]="!isProfessor"></p-button>
             <p-button (onClick)="excluir(curso)" styleClass="p-button-raised p-ml-1 p-button-danger" title="Excluir" icon="pi pi-trash" type="button" [disabled]="!isProfessor"></p-button>
           </td>
         </tr>

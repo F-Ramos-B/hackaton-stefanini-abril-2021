@@ -10,6 +10,6 @@ export default class Aula {
   constructor() { }
 
   static include(aula: Aula): Aula {
-    return Mapper.pick(aula, ['nome', 'duracao', 'topicos', 'idCurso']);
+    return Mapper.pick(aula, ['id', 'nome', 'duracao', 'topicos', 'idCurso']);
   }
 }

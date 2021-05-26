@@ -2,9 +2,9 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn,
 
 import { ToastService } from './../services/toast.service';
 
-export class FormUtils {
+export abstract class FormUtils {
 
-  static forceValidateAllFormFields(formGroup: FormGroup, callBackIfValid: () => void = null, toast: boolean = true) {
+  static forceValidateAllFormFields(formGroup: FormGroup | FormArray, callBackIfValid: () => void = null, toast: boolean = true) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       if (control instanceof FormControl && control.enabled) {
@@ -14,14 +14,20 @@ export class FormUtils {
         this.forceValidateAllFormFields(control, null, false);
       } else if (control instanceof FormArray) {
         for (const item of control.controls) {
-          this.forceValidateAllFormFields(item as FormGroup, null, false);
+          if (item instanceof FormGroup || item instanceof FormArray) {
+            this.forceValidateAllFormFields(item, null, false);
+          } else if (item instanceof FormControl) {
+            item.markAsTouched({ onlySelf: true });
+            item.markAsDirty({ onlySelf: true });
+          }
         }
-        /* for (let i = 0; i < control.length; i++) {
-          this.forceValidateAllFormFields(control.at(i) as FormGroup, null, false);
-        } */
       }
     });
 
+    FormUtils.verificarValidade(formGroup, callBackIfValid, toast);
+  }
+
+  private static verificarValidade(formGroup: FormGroup | FormArray, callBackIfValid: () => void, toast: boolean) {
     if (formGroup.valid) {
       if (callBackIfValid) {
         callBackIfValid();
@@ -31,9 +37,7 @@ export class FormUtils {
         ToastService.instance.aviso('Preencha os campos obrigatórios.');
       }
     }
-
   }
-
 
   static markAllControlsAsTouched(form: FormGroup): void {
     const controls = form.controls;
