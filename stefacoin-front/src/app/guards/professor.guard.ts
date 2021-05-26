@@ -13,7 +13,7 @@ export class ProfessorGuard extends TipoUsuarioGuard implements CanActivate, Can
     const isEdicao = url.some(segment => segment.path.includes('editar'));
     const usuario = this.auth.getUsuario();
     const extras = this.router.getCurrentNavigation().extras?.state;
-    
+
     if (isEdicao && extras?.tipo) {
       return extras.id && usuario.id === extras.id && EnumTipoUsuario.is.PROFESSOR(usuario.tipo);
     }
