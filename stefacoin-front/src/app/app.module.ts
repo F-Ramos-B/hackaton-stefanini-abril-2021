@@ -31,6 +31,7 @@ import { HttpInterceptorService } from './interceptors/http-interceptor.service'
 import { ListarAlunoComponent } from './pages/private/aluno/listar-aluno/listar-aluno.component';
 import { DetalharCursoComponent } from './pages/private/curso/detalhar-curso/detalhar-curso.component';
 import { IncluirCursoComponent } from './pages/private/curso/incluir-curso/incluir-curso.component';
+import { ListarAulasCursoComponent } from './pages/private/curso/listar-aulas-curso/listar-aulas-curso.component';
 import { ListarCursoComponent } from './pages/private/curso/listar-curso/listar-curso.component';
 import { HomeComponent } from './pages/private/home/home.component';
 import { ListarProfessorComponent } from './pages/private/professor/listar-professor/listar-professor.component';
@@ -58,7 +59,8 @@ export function tokenGetter() {
     ListarAlunoComponent,
     ListarCursoComponent,
     DetalharCursoComponent,
-    IncluirCursoComponent
+    IncluirCursoComponent,
+    ListarAulasCursoComponent
   ],
   imports: [
     BrowserModule,

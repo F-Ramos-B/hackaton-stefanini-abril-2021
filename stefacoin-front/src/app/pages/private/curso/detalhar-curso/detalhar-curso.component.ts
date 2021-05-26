@@ -1,5 +1,7 @@
+import { Aula } from './../../../../models/aula';
 import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { PrivateBaseComponent } from 'src/app/components/shared/private-base.component';
 import { Curso } from 'src/app/models/curso';
 
@@ -15,7 +17,7 @@ import { CursoService } from './../../../../services/curso.service';
 export class DetalharCursoComponent extends PrivateBaseComponent implements OnInit {
 
   idCurso: number;
-  curso: Curso;
+  curso$: Observable<Curso>;
   usuario: UsuarioToken;
   isProfessor: boolean;
 
@@ -28,7 +30,11 @@ export class DetalharCursoComponent extends PrivateBaseComponent implements OnIn
   }
 
   ngOnInit(): void {
-    this.cursoService.buscarPorId(this.idCurso).subscribe(curso => this.curso = curso);
+    this.curso$ = this.cursoService.buscarPorId(this.idCurso);
+  }
+
+  detalharAula(aula: Aula) {
+    console.log(aula);
   }
 
   avaliar() {

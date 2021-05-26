@@ -1,1 +1,12 @@
-<p>detalhar-curso works!</p>
+<div class="p-grid" *ngIf="(curso$ | async) as curso">
+
+  <div class="p-col-12">
+    <pre>{{ curso | json }}</pre>
+    <hr />
+  </div>
+
+  <div class="p-col-12">
+    <app-listar-aulas-curso [mostrarAcoes]="isProfessor" [nomeCurso]="curso.nome" [aulas]="curso.aulas"></app-listar-aulas-curso>
+  </div>
+
+</div>

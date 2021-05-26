@@ -1,0 +1,34 @@
+<div class="text-center-table">
+  <p-table [value]="aulas">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+          Aulas do curso {{ nomeCurso }}
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="nome">Nome<p-sortIcon field="nome"></p-sortIcon></th>
+        <th scope="col" pSortableColumn="duracao">Duração<p-sortIcon field="duracao"></p-sortIcon></th>
+        <th scope="col">Tópicos</th>
+        <th scope="col" *ngIf="mostrarAcoes">Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-aula let-expanded="expanded">
+      <tr>
+        <td>{{aula.nome}}</td>
+        <td>{{aula.duracao}} dias</td>
+        <td>{{aula.topicos}}</td>
+        <td *ngIf="mostrarAcoes">
+          <p-button  styleClass="p-button-raised p-mr-1" title="Detalhar" icon="pi pi-info-circle" type="button"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="mostrarAcoes ? 4 : 3">
+          Nenhum registro.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

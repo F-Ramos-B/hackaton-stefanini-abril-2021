@@ -2,7 +2,7 @@
 
 <div class="p-grid" *ngIf="(dadosTabela$ | async) as cursos">
   <div class="p-col-12 text-center-table">
-    <p-table [value]="cursos">
+    <p-table [value]="cursos" dataKey="id" rowExpandMode="single">
       <ng-template pTemplate="caption">
         <div class="p-d-flex p-ai-center p-jc-between">
             Cursos
@@ -11,14 +11,18 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
+          <th scope="col" style="width: 3rem;"></th>
           <th scope="col" pSortableColumn="nome">Nome<p-sortIcon field="nome"></p-sortIcon></th>
           <th scope="col" pSortableColumn="descricao">Descrição<p-sortIcon field="descricao"></p-sortIcon></th>
           <th scope="col" pSortableColumn="professor.nome">Professor<p-sortIcon field="professor.nome"></p-sortIcon></th>
           <th scope="col">Ações</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-curso>
+      <ng-template pTemplate="body" let-curso let-expanded="expanded">
         <tr>
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="curso" title="Ver aulas" class="p-button-rounded p-button-raised p-button-help" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
           <td>{{curso.nome}}</td>
           <td>{{curso.descricao}}</td>
           <td>{{curso.professor.nome}}</td>
@@ -29,9 +33,16 @@
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="rowexpansion" let-curso>
+        <tr>
+          <td [attr.colspan]="5" class="row-expand-interior">
+            <app-listar-aulas-curso [nomeCurso]="curso.nome" [aulas]="curso.aulas"></app-listar-aulas-curso>
+          </td>
+        </tr>
+      </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td [attr.colspan]="4">
+          <td [attr.colspan]="5">
             Nenhum registro.
           </td>
         </tr>
