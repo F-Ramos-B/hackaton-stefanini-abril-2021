@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
 import { takeUntil } from 'rxjs/operators';
+import { PrivateBaseComponent } from 'src/app/components/shared/private-base.component';
 import mensagem from 'src/app/models/mensagem';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { EnumTipoUsuario } from '../../../enums/enum-tipo-usuario.model';
-import { BaseComponent } from './../../../components/shared/base.component';
 import { AlunoService } from './../../../services/aluno.service';
 import { CadastroService } from './../../../services/cadastro.service';
 import { ProfessorService } from './../../../services/professor.service';
@@ -18,7 +19,7 @@ import { FormUtils } from './../../../utils/form-utils';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.scss']
 })
-export class CadastroComponent extends BaseComponent implements OnInit {
+export class CadastroComponent extends PrivateBaseComponent implements OnInit {
 
   idEdicao: number;
   idTipoFixo: number;
@@ -35,18 +36,15 @@ export class CadastroComponent extends BaseComponent implements OnInit {
   });
 
   constructor(
+    protected injector: Injector,
     private cadastroService: CadastroService,
     private professorService: ProfessorService,
     private alunoService: AlunoService,
-    private router: Router,
     private usuarioService: UsuarioService
   ) {
-    super();
-    const extras = this.router.getCurrentNavigation()?.extras?.state;
-    if (extras) {
-      this.idEdicao = extras.id;
-      this.idTipoFixo = extras.tipo;
-    }
+    super(injector.get(AuthService), injector.get(Router));
+    this.idEdicao = this.navigationParams?.id;
+    this.idTipoFixo = this.navigationParams?.tipo;
   }
 
   ngOnInit(): void {

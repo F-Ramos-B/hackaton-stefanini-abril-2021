@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
-import { identity, iif, Observable, of } from 'rxjs';
+import { identity, Observable } from 'rxjs';
 import { map, mergeAll, tap, toArray } from 'rxjs/operators';
-import { BaseComponent } from 'src/app/components/shared/base.component';
+import { PrivateBaseComponent } from 'src/app/components/shared/private-base.component';
 import { Curso } from 'src/app/models/curso';
 import mensagem from 'src/app/models/mensagem';
 import { Professor } from 'src/app/models/professor';
 import { ProfessorService } from 'src/app/services/professor.service';
 import { FormUtils } from 'src/app/utils/form-utils';
 
+import { AuthService } from './../../../../services/auth.service';
 import { CursoService } from './../../../../services/curso.service';
-
 
 @Component({
   selector: 'app-incluir-curso',
   templateUrl: './incluir-curso.component.html',
   styleUrls: ['./incluir-curso.component.scss']
 })
-export class IncluirCursoComponent extends BaseComponent implements OnInit {
+export class IncluirCursoComponent extends PrivateBaseComponent implements OnInit {
 
   idEdicao: number;
   professores$: Observable<SelectItem<number>[]>;
@@ -32,15 +32,12 @@ export class IncluirCursoComponent extends BaseComponent implements OnInit {
   });
 
   constructor(
+    protected injector: Injector,
     private professorService: ProfessorService,
-    private cursoService: CursoService,
-    private router: Router
+    private cursoService: CursoService
   ) {
-    super();
-    const extras = this.router.getCurrentNavigation()?.extras?.state;
-    if (extras) {
-      this.idEdicao = extras.id;
-    }
+    super(injector.get(AuthService), injector.get(Router));
+    this.idEdicao = this.navigationParams?.id;
   }
 
   ngOnInit(): void {

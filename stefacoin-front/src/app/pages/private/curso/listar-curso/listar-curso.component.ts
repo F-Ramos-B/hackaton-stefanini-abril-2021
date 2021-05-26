@@ -13,7 +13,7 @@ export class ListarCursoComponent extends CrudBaseComponent<Curso> implements On
 
   constructor(
     protected injector: Injector,
-    private cursoService: CursoService,
+    private cursoService: CursoService
   ) { super(injector); }
 
   listar() {

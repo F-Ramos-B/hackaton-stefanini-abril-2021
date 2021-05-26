@@ -3,35 +3,24 @@ import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Observable } from 'rxjs';
 
-import { EnumTipoUsuario } from '../../enums/enum-tipo-usuario.model';
-import { UsuarioToken } from '../../models/usuario-token';
-import { AuthService } from '../../services/auth.service';
-import { BaseComponent } from './base.component';
+import { AuthService } from './../../services/auth.service';
+import { PrivateBaseComponent } from './private-base.component';
 
 @Injectable()
-export abstract class CrudBaseComponent<T> extends BaseComponent implements OnInit {
-
-  usuario: UsuarioToken;
-  isProfessor: boolean;
+export abstract class CrudBaseComponent<T> extends PrivateBaseComponent implements OnInit {
 
   dadosTabela$: Observable<T[]>;
 
-  protected authService: AuthService;
-  protected router: Router;
   protected confirmService: ConfirmationService;
 
   constructor(
     protected injector: Injector
   ) {
-    super();
-    this.authService = this.injector.get(AuthService);
-    this.router = this.injector.get(Router);
+    super(injector.get(AuthService), injector.get(Router));
     this.confirmService = this.injector.get(ConfirmationService);
   }
 
   ngOnInit(): void {
-    this.usuario = this.authService.getUsuario();
-    this.isProfessor = EnumTipoUsuario.is.PROFESSOR(this.usuario?.tipo);
     this.listar();
   }
 
