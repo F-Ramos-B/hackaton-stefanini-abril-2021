@@ -1,122 +1,124 @@
-<div class="box">
-  <div class="p-grid p-fluid">
-    <form [formGroup]="cursoForm" (ngSubmit)="validate()">
-      <div class="p-col-12 tela-login">
-
-        <h1 class="p-text-center">{{ idEdicao ? 'Editar' : 'Cadastrar' }} curso</h1>
-
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><em class="pi pi-book"></em></span>
-          <input type="text" pInputText formControlName="nome" id="tx-nome" placeholder="Nome">
-          <app-mensagem-validacao formControlName="nome"></app-mensagem-validacao>
-        </div>
-
-        <div class="p-my-3">
-          <textarea pInputTextarea formControlName="descricao" [rows]="5" [cols]="30" id="tx-descricao" placeholder="Descrição"></textarea>
-          <app-mensagem-validacao formControlName="descricao" [isInline]="false"></app-mensagem-validacao>
-        </div>
-
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><em class="pi pi-user"></em></span>
-          <p-dropdown
-            [options]="(professores$ | async)"
-            placeholder="Selecione" [ngStyle]="{'width': '100%'}"
-            emptyMessage="Nenhum professor encontrado."
-            formControlName="idProfessor" name="idProfessor" inputId="sl-professor">
-          </p-dropdown>
-        </div>
-        <app-mensagem-validacao styleClass="p-mt-1" formControlName="idProfessor" [isInline]="false"></app-mensagem-validacao>
-
-        <h2 class="p-text-center">Aulas</h2>
-        <hr />
-
-        <ng-container formArrayName="aulas">
-          <div *ngFor="let aulaControl of aulas.controls; index as i">
-            <ng-container [formGroupName]="i">
-
-              <div class="p-grid p-ai-center vertical-container">
-                <div class="p-col-6 p-offset-3 p-text-center">
-                  <h3>Aula #{{ i + 1 }}</h3>
-                </div>
-                <div class="p-col-3 p-text-right">
-                  <label>&nbsp;</label>
-                  <p-button [disabled]="aulas.length <= 1" styleClass="p-button-raised p-button-danger p-button-rounded" title="Remover aula" (onClick)="removerAula(i)" icon="pi pi-times-circle" type="button"></p-button>
-                </div>
-              </div>
-
-              <div class="p-inputgroup p-mb-3">
-                <span class="p-inputgroup-addon"><em class="pi pi-calendar"></em></span>
-                <input type="text" pInputText formControlName="nome" id="tx-nome-{{i}}" placeholder="Nome">
-                <app-mensagem-validacao formControlName="nome"></app-mensagem-validacao>
-              </div>
-
-              <div class="p-inputgroup p-mb-3">
-                <span class="p-inputgroup-addon"><em class="pi pi-clock"></em></span>
-
-
-                <p-inputNumber 
-                formControlName="duracao"
-                inputId="nb-idade"
-                mode="decimal"
-                placeholder="Duração (dias)"
-                [showButtons]="true"
-                inputId="num-duracao-{{i}}"
-                [ngStyle]="{'width': '100%'}"
-                [min]="1" [max]="25"></p-inputNumber>
-                <app-mensagem-validacao formControlName="duracao"></app-mensagem-validacao>
-              </div>
+<p-card class="card-app-content">
+  <div class="box">
+    <div class="p-grid p-fluid">
+      <form [formGroup]="cursoForm" (ngSubmit)="validate()">
+        <div class="p-col-12 tela-login">
   
-              <ng-container formArrayName="topicos">
-                <div class="p-grid p-ai-end vertical-container">
-                  <div class="p-col-12 p-md-6" *ngFor="let topico of getTopicosDeAulaControl(aulaControl).controls; index as j">
-                    <!-- <ng-container [formGroupName]="j"> Caso fosse FormGroup de topicos, precisaria disto -->
-                      <label for="tx-topico-{{i}}-{{j}}">Tópico #{{ j + 1 }}</label>
-                      <div class="p-inputgroup p-mt-2">
-                        <p-button
-                          styleClass="p-button-raised p-button-danger"
-                          title="Remover tópico"
-                          (onClick)="removerTopico(i, j)"
-                          icon="pi pi-times-circle"
-                          type="button"
-                          [disabled]="getTopicosDeAulaControl(aulaControl).length <= 1"
-                        ></p-button>
-                        <input type="text" pInputText [formControlName]="j" id="tx-topico-{{i}}-{{j}}" placeholder="Nome">
-                      </div>
-                      <app-mensagem-validacao [formControlName]="j" [isInline]="false"></app-mensagem-validacao>
-                    <!-- </ng-container> -->
+          <h1 class="p-text-center">{{ idEdicao ? 'Editar' : 'Cadastrar' }} curso</h1>
+  
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><em class="pi pi-book"></em></span>
+            <input type="text" pInputText formControlName="nome" id="tx-nome" placeholder="Nome">
+            <app-mensagem-validacao formControlName="nome"></app-mensagem-validacao>
+          </div>
+  
+          <div class="p-my-3">
+            <textarea pInputTextarea formControlName="descricao" [rows]="5" [cols]="30" id="tx-descricao" placeholder="Descrição"></textarea>
+            <app-mensagem-validacao formControlName="descricao" [isInline]="false"></app-mensagem-validacao>
+          </div>
+  
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><em class="pi pi-user"></em></span>
+            <p-dropdown
+              [options]="(professores$ | async)"
+              placeholder="Selecione" [ngStyle]="{'width': '100%'}"
+              emptyMessage="Nenhum professor encontrado."
+              formControlName="idProfessor" name="idProfessor" inputId="sl-professor">
+            </p-dropdown>
+          </div>
+          <app-mensagem-validacao styleClass="p-mt-1" formControlName="idProfessor" [isInline]="false"></app-mensagem-validacao>
+  
+          <h2 class="p-text-center">Aulas</h2>
+          <hr />
+  
+          <ng-container formArrayName="aulas">
+            <div *ngFor="let aulaControl of aulas.controls; index as i">
+              <ng-container [formGroupName]="i">
+  
+                <div class="p-grid p-ai-center vertical-container">
+                  <div class="p-col-6 p-offset-3 p-text-center">
+                    <h3>Aula #{{ i + 1 }}</h3>
                   </div>
-                  <div class="p-col-12 p-md-6">
+                  <div class="p-col-3 p-text-right">
                     <label>&nbsp;</label>
-                    <div class="p-inputgroup">
-                      <p-button
-                        styleClass="p-button-raised p-button-success p-button-rounded"
-                        title="Novo tópico" type="button"
-                        (onClick)="gerarTopico(i)"
-                        icon="pi pi-plus-circle"
-                      ></p-button>
+                    <p-button [disabled]="aulas.length <= 1" styleClass="p-button-raised p-button-danger p-button-rounded" title="Remover aula" (onClick)="removerAula(i)" icon="pi pi-times-circle" type="button"></p-button>
+                  </div>
+                </div>
+  
+                <div class="p-inputgroup p-mb-3">
+                  <span class="p-inputgroup-addon"><em class="pi pi-calendar"></em></span>
+                  <input type="text" pInputText formControlName="nome" id="tx-nome-{{i}}" placeholder="Nome">
+                  <app-mensagem-validacao formControlName="nome"></app-mensagem-validacao>
+                </div>
+  
+                <div class="p-inputgroup p-mb-3">
+                  <span class="p-inputgroup-addon"><em class="pi pi-clock"></em></span>
+  
+  
+                  <p-inputNumber 
+                  formControlName="duracao"
+                  inputId="nb-idade"
+                  mode="decimal"
+                  placeholder="Duração (dias)"
+                  [showButtons]="true"
+                  inputId="num-duracao-{{i}}"
+                  [ngStyle]="{'width': '100%'}"
+                  [min]="1" [max]="25"></p-inputNumber>
+                  <app-mensagem-validacao formControlName="duracao"></app-mensagem-validacao>
+                </div>
+    
+                <ng-container formArrayName="topicos">
+                  <div class="p-grid p-ai-end vertical-container">
+                    <div class="p-col-12 p-md-6" *ngFor="let topico of getTopicosDeAulaControl(aulaControl).controls; index as j">
+                      <!-- <ng-container [formGroupName]="j"> Caso fosse FormGroup de topicos, precisaria disto -->
+                        <label for="tx-topico-{{i}}-{{j}}">Tópico #{{ j + 1 }}</label>
+                        <div class="p-inputgroup p-mt-2">
+                          <p-button
+                            styleClass="p-button-raised p-button-danger"
+                            title="Remover tópico"
+                            (onClick)="removerTopico(i, j)"
+                            icon="pi pi-times-circle"
+                            type="button"
+                            [disabled]="getTopicosDeAulaControl(aulaControl).length <= 1"
+                          ></p-button>
+                          <input type="text" pInputText [formControlName]="j" id="tx-topico-{{i}}-{{j}}" placeholder="Nome">
+                        </div>
+                        <app-mensagem-validacao [formControlName]="j" [isInline]="false"></app-mensagem-validacao>
+                      <!-- </ng-container> -->
+                    </div>
+                    <div class="p-col-12 p-md-6">
+                      <label>&nbsp;</label>
+                      <div class="p-inputgroup">
+                        <p-button
+                          styleClass="p-button-raised p-button-success p-button-rounded"
+                          title="Novo tópico" type="button"
+                          (onClick)="gerarTopico(i)"
+                          icon="pi pi-plus-circle"
+                        ></p-button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </ng-container>
               </ng-container>
-            </ng-container>
-
+  
+            <hr />
+  
+            </div>
+            <p-button styleClass="p-button-raised p-button-success" (onClick)="gerarAula()" icon="pi pi-plus-circle" type="button" label="Nova aula"></p-button>
+          </ng-container>
+  
           <hr />
-
-          </div>
-          <p-button styleClass="p-button-raised p-button-success" (onClick)="gerarAula()" icon="pi pi-plus-circle" type="button" label="Nova aula"></p-button>
-        </ng-container>
-
-        <hr />
-
-        <div class="p-grid">
-          <div class="p-col-6">
-            <p-button styleClass="p-button-raised" icon="pi pi-user-plus" type="submit" label="Cadastrar"></p-button>
-          </div>
-          <div class="p-col-6">
-            <p-button type="button" styleClass="p-button-raised p-button-secondary" icon="pi pi-times-circle" (onClick)="voltar()" label="Cancelar"></p-button>
+  
+          <div class="p-grid">
+            <div class="p-col-6">
+              <p-button styleClass="p-button-raised" icon="pi pi-user-plus" type="submit" label="Cadastrar"></p-button>
+            </div>
+            <div class="p-col-6">
+              <p-button type="button" styleClass="p-button-raised p-button-secondary" icon="pi pi-times-circle" (onClick)="voltar()" label="Cancelar"></p-button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
+</p-card>

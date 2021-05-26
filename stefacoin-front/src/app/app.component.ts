@@ -6,13 +6,10 @@ import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
-  template: ` <app-header></app-header>
+  template: `<app-header></app-header>
     <p-toast></p-toast>
-    <div class="container p-component">
-      <p-card class="card-app-content">
-        <router-outlet></router-outlet>
-      </p-card>
-      <!-- <router-outlet name="public"></router-outlet> -->
+    <div class="container">
+      <router-outlet></router-outlet>
     </div>`
 })
 export class AppComponent {
@@ -31,4 +28,5 @@ export class AppComponent {
     this.primengConfig.ripple = true;
     this.router.navigate(this.authService.isAuthenticated() ? [''] : ['/login']);
   }
+
 }

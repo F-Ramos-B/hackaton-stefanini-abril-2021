@@ -1,31 +1,33 @@
-<div class="box">
-  <div class="p-grid p-fluid">
-    <form [formGroup]="loginForm" (ngSubmit)="validate()">
-      <div class="p-col-12 tela-login">
-        <div class="p-inputgroup p-mb-3">
-          <span class="p-inputgroup-addon"><em class="pi pi-envelope"></em></span>
-          <input pInputText type="email" formControlName="email" id="tx-email" placeholder="E-mail">
-          <app-mensagem-validacao formControlName="email" alertType="warn" type="email" errorMessage="E-mail inválido"></app-mensagem-validacao>
-          <app-mensagem-validacao formControlName="email"></app-mensagem-validacao>
-        </div>
-
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><em class="pi pi-lock"></em></span>
-          <input type="password" formControlName="senha" pInputText id="pwd-senha" placeholder="Senha">
-          <app-mensagem-validacao formControlName="senha"></app-mensagem-validacao>
-        </div>
-
-        <hr />
-
-        <div class="p-grid">
-          <div class="p-col-6">
-            <p-button styleClass="p-button-raised" icon="pi pi-sign-in" type="submit" label="Logar"></p-button>
+<p-card class="card-app-content card-center">
+  <div class="box">
+    <div class="p-grid p-fluid">
+      <form [formGroup]="loginForm" (ngSubmit)="validate()">
+        <div class="p-col-12 tela-login">
+          <div class="p-inputgroup p-mb-3">
+            <span class="p-inputgroup-addon"><em class="pi pi-envelope"></em></span>
+            <input pInputText type="email" formControlName="email" id="tx-email" placeholder="E-mail">
+            <app-mensagem-validacao formControlName="email" alertType="warn" type="email" errorMessage="E-mail inválido"></app-mensagem-validacao>
+            <app-mensagem-validacao formControlName="email"></app-mensagem-validacao>
           </div>
-          <div class="p-col-6">
-            <p-button type="button" styleClass="p-button-raised p-button-secondary" icon="pi pi-user-plus" [routerLink]="['/nova-conta']" label="Cadastrar"></p-button>
+  
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon"><em class="pi pi-lock"></em></span>
+            <input type="password" formControlName="senha" pInputText id="pwd-senha" placeholder="Senha">
+            <app-mensagem-validacao formControlName="senha"></app-mensagem-validacao>
+          </div>
+  
+          <hr />
+  
+          <div class="p-grid">
+            <div class="p-col-6">
+              <p-button styleClass="p-button-raised" icon="pi pi-sign-in" type="submit" label="Logar"></p-button>
+            </div>
+            <div class="p-col-6">
+              <p-button type="button" styleClass="p-button-raised p-button-secondary" icon="pi pi-user-plus" [routerLink]="['/nova-conta']" label="Cadastrar"></p-button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
+</p-card>

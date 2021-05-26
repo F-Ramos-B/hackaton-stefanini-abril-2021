@@ -1,68 +1,70 @@
-<div class="box">
-  <div class="p-grid p-fluid">
-    <form [formGroup]="cadastroForm" (ngSubmit)="validate()">
-      <div class="p-col-12 tela-login">
-
-        <h1 class="p-text-center">{{ idEdicao ? 'Editar' : 'Cadastrar' }} {{ tipo?.value | tipoUsuario | lowercase}}</h1>
-
-        <ng-container *ngIf="!idTipoFixo">
-          <p-selectButton [options]="tipos" formControlName="tipo"></p-selectButton>
-          <hr />
-        </ng-container>
-
-        <div class="p-inputgroup p-mb-3">
-          <span class="p-inputgroup-addon"><em class="pi pi-user"></em></span>
-          <input type="text" pInputText formControlName="nome" id="tx-nome" placeholder="Nome">
-          <app-mensagem-validacao formControlName="nome"></app-mensagem-validacao>
-        </div>
-        <div class="p-inputgroup p-mb-3">
-          <span class="p-inputgroup-addon"><em class="pi pi-envelope"></em></span>
-          <input pInputText type="email" formControlName="email" id="tx-email" placeholder="E-mail">
-          <app-mensagem-validacao formControlName="email" alertType="warn" type="email" errorMessage="E-mail inválido"></app-mensagem-validacao>
-          <app-mensagem-validacao formControlName="email"></app-mensagem-validacao>
-        </div>
-
-        <div class="p-inputgroup">
-          <span class="p-inputgroup-addon"><em class="pi pi-lock"></em></span>
-          <input type="password" formControlName="senha" pInputText id="pwd-senha" placeholder="Senha">
-          <app-mensagem-validacao formControlName="senha"></app-mensagem-validacao>
-        </div>
-
-        <ng-container *ngIf="!isProfessor">
-
-          <div class="p-inputgroup p-my-3 p-field">
-            <span class="p-inputgroup-addon"><em class="pi pi-sort-numeric-up-alt"></em></span>
-
-            <p-inputNumber 
-              formControlName="idade"
-              inputId="nb-idade"
-              mode="decimal"
-              placeholder="Idade"
-              [showButtons]="true"
-              inputId="minmax-buttons"
-              [ngStyle]="{'width': '100%'}"
-              [min]="18" [max]="65"></p-inputNumber>
-            <app-mensagem-validacao formControlName="idade"></app-mensagem-validacao>
+<p-card class="card-app-content card-center">
+  <div class="box">
+    <div class="p-grid p-fluid">
+      <form [formGroup]="cadastroForm" (ngSubmit)="validate()">
+        <div class="p-col-12 tela-login">
+  
+          <h1 class="p-text-center">{{ idEdicao ? 'Editar' : 'Cadastrar' }} {{ tipo?.value | tipoUsuario | lowercase}}</h1>
+  
+          <ng-container *ngIf="!idTipoFixo">
+            <p-selectButton [options]="tipos" formControlName="tipo"></p-selectButton>
+            <hr />
+          </ng-container>
+  
+          <div class="p-inputgroup p-mb-3">
+            <span class="p-inputgroup-addon"><em class="pi pi-user"></em></span>
+            <input type="text" pInputText formControlName="nome" id="tx-nome" placeholder="Nome">
+            <app-mensagem-validacao formControlName="nome"></app-mensagem-validacao>
           </div>
-
+          <div class="p-inputgroup p-mb-3">
+            <span class="p-inputgroup-addon"><em class="pi pi-envelope"></em></span>
+            <input pInputText type="email" formControlName="email" id="tx-email" placeholder="E-mail">
+            <app-mensagem-validacao formControlName="email" alertType="warn" type="email" errorMessage="E-mail inválido"></app-mensagem-validacao>
+            <app-mensagem-validacao formControlName="email"></app-mensagem-validacao>
+          </div>
+  
           <div class="p-inputgroup">
-            <span class="p-inputgroup-addon"><em class="pi pi-id-card"></em></span>
-            <input type="text" pInputText formControlName="formacao" id="tx-formacao" placeholder="Formação">
+            <span class="p-inputgroup-addon"><em class="pi pi-lock"></em></span>
+            <input type="password" formControlName="senha" pInputText id="pwd-senha" placeholder="Senha">
+            <app-mensagem-validacao formControlName="senha"></app-mensagem-validacao>
           </div>
-
-        </ng-container>
-
-        <hr />
-
-        <div class="p-grid">
-          <div class="p-col-6">
-            <p-button styleClass="p-button-raised" icon="pi pi-user-plus" type="submit" label="Cadastrar"></p-button>
-          </div>
-          <div class="p-col-6">
-            <p-button type="button" styleClass="p-button-raised p-button-secondary" icon="pi pi-times-circle" (onClick)="voltar()" label="Cancelar"></p-button>
+  
+          <ng-container *ngIf="!isProfessor">
+  
+            <div class="p-inputgroup p-my-3 p-field">
+              <span class="p-inputgroup-addon"><em class="pi pi-sort-numeric-up-alt"></em></span>
+  
+              <p-inputNumber 
+                formControlName="idade"
+                inputId="nb-idade"
+                mode="decimal"
+                placeholder="Idade"
+                [showButtons]="true"
+                inputId="minmax-buttons"
+                [ngStyle]="{'width': '100%'}"
+                [min]="18" [max]="65"></p-inputNumber>
+              <app-mensagem-validacao formControlName="idade"></app-mensagem-validacao>
+            </div>
+  
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon"><em class="pi pi-id-card"></em></span>
+              <input type="text" pInputText formControlName="formacao" id="tx-formacao" placeholder="Formação">
+            </div>
+  
+          </ng-container>
+  
+          <hr />
+  
+          <div class="p-grid">
+            <div class="p-col-6">
+              <p-button styleClass="p-button-raised" icon="pi pi-user-plus" type="submit" label="Cadastrar"></p-button>
+            </div>
+            <div class="p-col-6">
+              <p-button type="button" styleClass="p-button-raised p-button-secondary" icon="pi pi-times-circle" (onClick)="voltar()" label="Cancelar"></p-button>
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-</div>
+</p-card>

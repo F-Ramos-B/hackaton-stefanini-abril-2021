@@ -6,6 +6,8 @@ html {
 
 body {
   height: 100%;
+  font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: #495057;
 }
 
 .container {
@@ -20,6 +22,12 @@ body {
   }
   .p-card-body {
     height: 100%;
+  }
+}
+
+.card-center {
+  .p-card, .p-card-header, .p-card-body, .p-card-subheader, .p-card-content, .p-card-footer {
+    height: 100% !important;
   }
 }
 
