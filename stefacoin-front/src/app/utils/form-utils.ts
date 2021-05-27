@@ -39,6 +39,49 @@ export abstract class FormUtils {
     }
   }
 
+  static getFormErrors(form: AbstractControl) {
+    if (form instanceof FormControl) {
+      // Return FormControl errors or null
+      return form.errors ?? null;
+    }
+    if (form instanceof FormGroup || form instanceof FormArray) {
+      const groupErrors = form.errors;
+      // Form group can contain errors itself, in that case add'em
+      const formErrors = groupErrors ? { groupErrors } : {};
+      Object.keys(form.controls).forEach(key => {
+        // Recursive call of the FormGroup fields
+        const error = this.getFormErrors(form.get(key));
+        if (error !== null) {
+          // Only add error if not null
+          formErrors[key] = error;
+        }
+      });
+      // Return FormGroup errors or null
+      return Object.keys(formErrors).length > 0 ? formErrors : null;
+    }
+  }
+
+  static achatarErros(form: AbstractControl) {
+    const erros = this.getFormErrors(form);
+    const errosAchatados = FormUtils.achatarObjeto(erros);
+    return Object.keys(errosAchatados).length ? errosAchatados : null;
+  }
+
+  private static achatarObjeto(errors: ValidationErrors): ValidationErrors {
+    return !errors ? {} : Object.keys(errors).reduce((acc, key) => {
+      if (typeof errors[key] === 'object') {
+        return {
+          ...acc,
+          ...this.achatarObjeto(errors[key])
+        }
+      }
+      return {
+        ...acc,
+        [key]: errors[key]
+      }
+    }, {});
+  }
+
   static markAllControlsAsTouched(form: FormGroup): void {
     const controls = form.controls;
     for (const name in controls) {

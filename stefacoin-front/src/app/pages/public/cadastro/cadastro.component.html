@@ -1,7 +1,7 @@
 <p-card class="card-app-content card-center">
   <div class="box">
     <div class="p-grid p-fluid">
-      <form [formGroup]="cadastroForm" (ngSubmit)="validate()">
+      <form [formGroup]="formulario" (ngSubmit)="validate()">
         <div class="p-col-12 tela-login">
   
           <h1 class="p-text-center">{{ idEdicao ? 'Editar' : 'Cadastrar' }} {{ tipo?.value | tipoUsuario | lowercase}}</h1>

@@ -1,11 +1,8 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
 import { takeUntil } from 'rxjs/operators';
-import { PrivateBaseComponent } from 'src/app/components/shared/private-base.component';
-import mensagem from 'src/app/models/mensagem';
-import { AuthService } from 'src/app/services/auth.service';
+import { InclusaoBaseComponent } from 'src/app/components/shared/inclusao-base.component';
 
 import { EnumTipoUsuario } from '../../../enums/enum-tipo-usuario.model';
 import { AlunoService } from './../../../services/aluno.service';
@@ -19,14 +16,13 @@ import { FormUtils } from './../../../utils/form-utils';
   templateUrl: './cadastro.component.html',
   styleUrls: ['./cadastro.component.scss']
 })
-export class CadastroComponent extends PrivateBaseComponent implements OnInit {
+export class CadastroComponent extends InclusaoBaseComponent implements OnInit {
 
-  idEdicao: number;
   idTipoFixo: number;
   tipos: SelectItem<number>[] = EnumTipoUsuario.asSelectItem();
   isProfessor: boolean = true;
 
-  cadastroForm: FormGroup = new FormGroup({
+  formulario: FormGroup = new FormGroup({
     nome: new FormControl(null, Validators.required),
     email: new FormControl(null, [Validators.required, Validators.email]),
     senha: new FormControl(null, Validators.required),
@@ -42,8 +38,7 @@ export class CadastroComponent extends PrivateBaseComponent implements OnInit {
     private alunoService: AlunoService,
     private usuarioService: UsuarioService
   ) {
-    super(injector.get(AuthService), injector.get(Router));
-    this.idEdicao = this.navigationParams?.id;
+    super(injector);
     this.idTipoFixo = this.navigationParams?.tipo;
   }
 
@@ -52,23 +47,19 @@ export class CadastroComponent extends PrivateBaseComponent implements OnInit {
   }
 
   validate() {
-    FormUtils.forceValidateAllFormFields(this.cadastroForm, this.cadastrar.bind(this));
+    const operacao = this.idEdicao ? this.editar.bind(this) : this.cadastrar.bind(this);
+    FormUtils.forceValidateAllFormFields(this.formulario, operacao);
   }
 
   cadastrar() {
-    if (this.idEdicao) {
-      const isProfessor = EnumTipoUsuario.is.PROFESSOR(this.idTipoFixo);
-      const service = isProfessor ? this.professorService : this.alunoService;
-
-      service.editar(this.idEdicao, this.cadastroForm.value).subscribe(resposta => this.confirmarOperacao(resposta));
-    } else {
-      this.cadastroService.cadastrar(this.cadastroForm.value).subscribe(resposta => this.confirmarOperacao(resposta));
-    }
+    this.cadastroService.cadastrar(this.formulario.value).subscribe(resposta => this.confirmarOperacao(resposta));
   }
 
-  private confirmarOperacao(resposta: mensagem) {
-    this.toastSucesso(resposta.mensagem);
-    this.voltar();
+  editar() {
+    const isEdicaoProfessor = EnumTipoUsuario.is.PROFESSOR(this.idTipoFixo);
+    const service = isEdicaoProfessor ? this.professorService : this.alunoService;
+
+    service.editar(this.idEdicao, this.formulario.value).subscribe(resposta => this.confirmarOperacao(resposta));
   }
 
   observarMudancaTipo() {
@@ -95,7 +86,7 @@ export class CadastroComponent extends PrivateBaseComponent implements OnInit {
   }
 
   carregarUsuario() {
-    this.usuarioService.obterPorId(this.idEdicao).subscribe(usuario => this.cadastroForm.patchValue(usuario));
+    this.usuarioService.obterPorId(this.idEdicao).subscribe(usuario => this.formulario.patchValue(usuario));
   }
 
   voltar() {
@@ -108,19 +99,19 @@ export class CadastroComponent extends PrivateBaseComponent implements OnInit {
   }
 
   get idade(): FormControl {
-    return this.cadastroForm.get('idade') as FormControl;
+    return this.formulario.get('idade') as FormControl;
   }
 
   get formacao(): FormControl {
-    return this.cadastroForm.get('formacao') as FormControl;
+    return this.formulario.get('formacao') as FormControl;
   }
 
   get email(): FormControl {
-    return this.cadastroForm.get('email') as FormControl;
+    return this.formulario.get('email') as FormControl;
   }
 
   get tipo(): FormControl {
-    return this.cadastroForm.get('tipo') as FormControl;
+    return this.formulario.get('tipo') as FormControl;
   }
 
 }

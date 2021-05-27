@@ -37,6 +37,8 @@ export default class AulaController {
     const { nome, duracao, topicos, idCurso } = aula;
     Validador.validarParametros([{ nome }, { duracao }, { topicos }, { idCurso }]);
 
+    this.verificarTopicos(aula.topicos);
+
     const curso = await cursoController.obterPorId(idCurso);
 
     if (curso.aulas.some(aula => aula.nome === nome)) {
@@ -56,6 +58,8 @@ export default class AulaController {
   async alterar(id: number, aula: Aula) {
     const { nome, duracao, topicos, idCurso } = aula;
     Validador.validarParametros([{ id }, { idCurso }, { nome }, { duracao }, { topicos }]);
+
+    this.verificarTopicos(aula.topicos);
 
     const curso = await CursoRepository.obterPorId(idCurso);
 
@@ -91,5 +95,11 @@ export default class AulaController {
     await CursoRepository.alterar({ id: idCurso }, curso);
 
     return new Mensagem('Aula excluída com sucesso!', { id, idCurso });
+  }
+
+  private verificarTopicos(topicos: string[]): void {
+    if (topicos.length !== new Set<any>(topicos).size) {
+      throw new BusinessException('Existem tópicos com nomes iguais nessa aula.');
+    }
   }
 }

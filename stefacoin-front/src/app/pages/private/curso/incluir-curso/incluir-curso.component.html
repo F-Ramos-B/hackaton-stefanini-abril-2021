@@ -1,7 +1,7 @@
 <p-card class="card-app-content">
   <div class="box">
     <div class="p-grid p-fluid">
-      <form [formGroup]="cursoForm" (ngSubmit)="validate()">
+      <form [formGroup]="formulario" (ngSubmit)="validate()">
         <div class="p-col-12 tela-login">
   
           <h1 class="p-text-center">{{ idEdicao ? 'Editar' : 'Cadastrar' }} curso</h1>
@@ -30,7 +30,7 @@
   
           <h2 class="p-text-center">Aulas</h2>
           <hr />
-  
+          
           <ng-container formArrayName="aulas">
             <div *ngFor="let aulaControl of aulas.controls; index as i">
               <ng-container [formGroupName]="i">

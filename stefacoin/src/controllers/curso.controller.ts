@@ -1,5 +1,6 @@
-import { TipoUsuario } from './../utils/tipo-usuario.enum';
+import { Aula } from './../../../stefacoin-front/src/app/models/aula';
 import Curso from '../entities/curso.entity';
+import Avaliacao from '../models/avaliacao.model';
 import CursoProfessor from '../models/curso-professor.model';
 import alunoRepository from '../repositories/aluno.repository';
 import CursoRepository from '../repositories/curso.repository';
@@ -9,9 +10,13 @@ import BusinessException from '../utils/exceptions/business.exception';
 import Mapper from '../utils/mapper';
 import Mensagem from '../utils/mensagem';
 import { Validador } from '../utils/utils';
-import Avaliacao from '../models/avaliacao.model';
+import { TipoUsuario } from './../utils/tipo-usuario.enum';
 import AulaController from './aula.controller';
-import Exception from '../utils/exceptions/exception';
+
+interface ErroAulas {
+  aula: Aula;
+  erro: string;
+}
 
 export default class CursoController {
 
@@ -56,7 +61,7 @@ export default class CursoController {
 
     const id = await CursoRepository.incluir(Curso.include(curso));
 
-    const erros: any[] = await this.aplicarAulas(id, curso);
+    const erros: ErroAulas[] = await this.aplicarAulas(id, curso);
 
     return new Mensagem(
       `Curso alterado com sucesso! ${erros.length ? 'Algumas aulas fornecidas não puderam ser validadas e por isso não foram aplicadas.' : ''}`.trim(),
@@ -79,7 +84,7 @@ export default class CursoController {
 
     await CursoRepository.alterar({ id }, cursoAtual);
 
-    const erros: any[] = await this.aplicarAulas(id, curso);
+    const erros: ErroAulas[] = await this.aplicarAulas(id, curso);
 
     return new Mensagem(
       `Curso alterado com sucesso! ${erros.length ? 'Algumas aulas fornecidas não puderam ser validadas e por isso não foram aplicadas.' : ''}`.trim(),
@@ -124,13 +129,14 @@ export default class CursoController {
     return new Mensagem('Curso avaliado com sucesso!', { idCurso: id, avaliacao: avaliacaoIncluir });
   }
 
-  private async aplicarAulas(id: number, curso: Curso): Promise<any[]> {
-    const errosAulas: any[] = [];
+  private async aplicarAulas(id: number, curso: Curso): Promise<ErroAulas[]> {
+    const aulaController = new AulaController();
+    const errosAulas: ErroAulas[] = [];
 
     for (const aula of curso.aulas) {
       try {
         aula.idCurso = id;
-        aula.id ? await new AulaController().alterar(aula.id, aula) : await new AulaController().incluir(aula);
+        aula.id ? await aulaController.alterar(aula.id, aula) : await aulaController.incluir(aula);
       } catch (err: any) {
         errosAulas.push({ aula, erro: err.message });
       }

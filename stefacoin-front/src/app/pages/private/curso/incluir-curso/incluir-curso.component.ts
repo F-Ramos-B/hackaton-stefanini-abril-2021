@@ -1,34 +1,31 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
 import { identity, Observable } from 'rxjs';
 import { map, mergeAll, tap, toArray } from 'rxjs/operators';
-import { PrivateBaseComponent } from 'src/app/components/shared/private-base.component';
+import { InclusaoBaseComponent } from 'src/app/components/shared/inclusao-base.component';
 import { Curso } from 'src/app/models/curso';
-import mensagem from 'src/app/models/mensagem';
 import { Professor } from 'src/app/models/professor';
 import { ProfessorService } from 'src/app/services/professor.service';
 import { FormUtils } from 'src/app/utils/form-utils';
 
-import { AuthService } from './../../../../services/auth.service';
 import { CursoService } from './../../../../services/curso.service';
+import { UniqueFieldFormArrayValidator } from './../../../../validators/unique-field-formarray.validator';
 
 @Component({
   selector: 'app-incluir-curso',
   templateUrl: './incluir-curso.component.html',
   styleUrls: ['./incluir-curso.component.scss']
 })
-export class IncluirCursoComponent extends PrivateBaseComponent implements OnInit {
+export class IncluirCursoComponent extends InclusaoBaseComponent implements OnInit {
 
-  idEdicao: number;
   professores$: Observable<SelectItem<number>[]>;
 
-  cursoForm: FormGroup = new FormGroup({
+  formulario: FormGroup = new FormGroup({
     nome: new FormControl(null, Validators.required),
     descricao: new FormControl(null, Validators.required),
     idProfessor: new FormControl(null, Validators.required),
-    aulas: new FormArray([this.templateFormAula()], Validators.required)
+    aulas: new FormArray([this.templateFormAula()], [Validators.required, UniqueFieldFormArrayValidator.validarUnique('nome')])
   });
 
   constructor(
@@ -36,30 +33,11 @@ export class IncluirCursoComponent extends PrivateBaseComponent implements OnIni
     private professorService: ProfessorService,
     private cursoService: CursoService
   ) {
-    super(injector.get(AuthService), injector.get(Router));
-    this.idEdicao = this.navigationParams?.id;
+    super(injector);
   }
 
   ngOnInit(): void {
     this.carregarProfessores();
-  }
-
-  validate() {
-    const action = this.idEdicao ? this.editar.bind(this) : this.cadastrar.bind(this);
-    FormUtils.forceValidateAllFormFields(this.cursoForm, action);
-  }
-
-  cadastrar() {
-    this.cursoService.incluir(this.cursoForm.value).subscribe(resposta => this.confirmarOperacao(resposta));
-  }
-
-  editar() {
-    this.cursoService.editar(this.idEdicao, this.cursoForm.value).subscribe(resposta => this.confirmarOperacao(resposta));
-  }
-
-  confirmarOperacao(resposta: mensagem) {
-    this.toastSucesso(resposta.mensagem);
-    this.voltar();
   }
 
   carregarProfessores() {
@@ -72,6 +50,25 @@ export class IncluirCursoComponent extends PrivateBaseComponent implements OnIni
     );
   }
 
+  validate() {
+    FormUtils.forceValidateAllFormFields(this.formulario, null, false);
+    const erros = FormUtils.achatarErros(this.formulario);
+
+    if (erros) {
+      this.toastAviso('unique' in erros ? 'Existem aulas com nomes repetidos ou tópicos na mesma aula com nomes repetidos.' : 'Preencha os campos obrigatórios.');
+    } else {
+      this.idEdicao ? this.editar() : this.cadastrar();
+    }
+  }
+
+  cadastrar() {
+    this.cursoService.incluir(this.formulario.value).subscribe(resposta => this.confirmarOperacao(resposta));
+  }
+
+  editar() {
+    this.cursoService.editar(this.idEdicao, this.formulario.value).subscribe(resposta => this.confirmarOperacao(resposta));
+  }
+
   verificarEdicao() {
     this.aulas.clear();
 
@@ -82,7 +79,7 @@ export class IncluirCursoComponent extends PrivateBaseComponent implements OnIni
 
   preencherFormularioEdicao(curso: Curso) {
     curso.aulas.forEach(aula => this.aulas.push(this.templateFormAula(aula.topicos.length)));
-    this.cursoForm.patchValue(curso);
+    this.formulario.patchValue(curso);
   }
 
   voltar() {
@@ -111,7 +108,7 @@ export class IncluirCursoComponent extends PrivateBaseComponent implements OnIni
       idCurso: new FormControl(null),
       nome: new FormControl(null, Validators.required),
       duracao: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(25)]),
-      topicos: new FormArray(Array.from({ length: numTopicos }, this.templateFormTopico), Validators.required)
+      topicos: new FormArray(Array.from({ length: numTopicos }, this.templateFormTopico), [Validators.required, UniqueFieldFormArrayValidator.validarUnique()])
     });
   }
 
@@ -120,11 +117,11 @@ export class IncluirCursoComponent extends PrivateBaseComponent implements OnIni
   }
 
   get idProfessor(): FormControl {
-    return this.cursoForm.get('idProfessor') as FormControl;
+    return this.formulario.get('idProfessor') as FormControl;
   }
 
   get aulas(): FormArray {
-    return this.cursoForm.get('aulas') as FormArray;
+    return this.formulario.get('aulas') as FormArray;
   }
 
   getTopicosDeIndiceAula(indexAula: number): FormArray {
