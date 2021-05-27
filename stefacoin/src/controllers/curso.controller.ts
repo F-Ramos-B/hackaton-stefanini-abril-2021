@@ -10,8 +10,11 @@ import Mapper from '../utils/mapper';
 import Mensagem from '../utils/mensagem';
 import { Validador } from '../utils/utils';
 import Avaliacao from '../models/avaliacao.model';
+import AulaController from './aula.controller';
+import Exception from '../utils/exceptions/exception';
 
 export default class CursoController {
+
   async obterPorId(id: number): Promise<Curso> {
     Validador.validarParametros([{ id }]);
     return await CursoRepository.obterPorId(id, true);
@@ -52,7 +55,13 @@ export default class CursoController {
     }
 
     const id = await CursoRepository.incluir(Curso.include(curso));
-    return new Mensagem('Curso incluído com sucesso!', await this.obterPorIdComProfessor(id));
+
+    const erros: any[] = await this.aplicarAulas(id, curso);
+
+    return new Mensagem(
+      `Curso alterado com sucesso! ${erros.length ? 'Algumas aulas fornecidas não puderam ser validadas e por isso não foram aplicadas.' : ''}`.trim(),
+      { curso: await this.obterPorIdComProfessor(id), erros }
+    );
   }
 
   async alterar(id: number, curso: Curso): Promise<Mensagem> {
@@ -66,10 +75,16 @@ export default class CursoController {
     }
 
     const cursoAtual = await this.obterPorId(id);
-    Mapper.merge(cursoAtual, curso, ['nome', 'descricao', 'idProfessor', 'aulas']);
+    Mapper.merge(cursoAtual, curso, ['nome', 'descricao', 'idProfessor']);
 
     await CursoRepository.alterar({ id }, cursoAtual);
-    return new Mensagem('Curso alterado com sucesso!', await this.obterPorIdComProfessor(id));
+
+    const erros: any[] = await this.aplicarAulas(id, curso);
+
+    return new Mensagem(
+      `Curso alterado com sucesso! ${erros.length ? 'Algumas aulas fornecidas não puderam ser validadas e por isso não foram aplicadas.' : ''}`.trim(),
+      { curso: await this.obterPorIdComProfessor(id), erros }
+    );
   }
 
   async excluir(id: number): Promise<Mensagem> {
@@ -107,5 +122,20 @@ export default class CursoController {
 
     await CursoRepository.alterar({ id }, cursoAtual);
     return new Mensagem('Curso avaliado com sucesso!', { idCurso: id, avaliacao: avaliacaoIncluir });
+  }
+
+  private async aplicarAulas(id: number, curso: Curso): Promise<any[]> {
+    const errosAulas: any[] = [];
+
+    for (const aula of curso.aulas) {
+      try {
+        aula.idCurso = id;
+        aula.id ? await new AulaController().alterar(aula.id, aula) : await new AulaController().incluir(aula);
+      } catch (err: any) {
+        errosAulas.push({ aula, erro: err.message });
+      }
+    }
+
+    return errosAulas;
   }
 }

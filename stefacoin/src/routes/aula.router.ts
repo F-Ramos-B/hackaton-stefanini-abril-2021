@@ -48,6 +48,7 @@ router.put('/aula/:id', async (req: Request, res: Response, next: NextFunction) 
 router.delete('/aula/:id', async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   const { idCurso } = req.query;
+  
   BaseRouter.reply(() => aulaController.excluir(Number(id), Number(idCurso)), res, next, getRolesPadraoAulas(req));
 });
 

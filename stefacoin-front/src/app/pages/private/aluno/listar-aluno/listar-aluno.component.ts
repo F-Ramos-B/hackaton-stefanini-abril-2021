@@ -2,7 +2,6 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { CrudBaseComponent } from 'src/app/components/shared/crud-base.component';
 import { EnumTipoUsuario } from 'src/app/enums/enum-tipo-usuario.model';
 import { Aluno } from 'src/app/models/aluno';
-import { Professor } from 'src/app/models/professor';
 
 import { AlunoService } from './../../../../services/aluno.service';
 
@@ -26,7 +25,7 @@ export class ListarAlunoComponent extends CrudBaseComponent<Aluno> implements On
     this.router.navigate(['alunos', 'editar'], { state: { id, tipo: EnumTipoUsuario.ALUNO.id } });
   }
 
-  excluir(aluno: Professor) {
+  excluir(aluno: Aluno) {
     this.confirmService.confirm({
       message: `Tem certeza que deseja excluir o aluno ${aluno.nome}?`,
       accept: () => this.confirmExcluir(aluno.id),

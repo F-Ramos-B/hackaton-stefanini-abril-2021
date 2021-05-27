@@ -43,4 +43,8 @@ export class ListarCursoComponent extends CrudBaseComponent<Curso> implements On
       this.listar();
     });
   }
+
+  onAulaExcluida() {
+    this.listar();
+  }
 }

@@ -22,7 +22,7 @@
           <td>{{professor.nome}}</td>
           <td>{{professor.email}}</td>
           <td>
-            <p-button *ngIf="professor?.cursos?.length" title="Mostrar cursos" styleClass="p-button-raised p-button-secondary" icon="pi pi-info-circle" type="button"></p-button>
+            <p-button *ngIf="professor?.cursos?.length" (onClick)="verCursos(professor.cursos)" title="Mostrar cursos" styleClass="p-button-raised p-button-secondary" icon="pi pi-info-circle" type="button"></p-button>
           </td>
           <td *ngIf="isProfessor">
             <p-button (onClick)="editar(professor.id)" styleClass="p-button-raised p-mr-1 p-button-help" title="Editar" icon="pi pi-user-edit" type="button" [disabled]="professor.id !== usuario.id"></p-button>

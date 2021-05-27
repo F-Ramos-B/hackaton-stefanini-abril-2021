@@ -30,6 +30,10 @@ export class DetalharCursoComponent extends PrivateBaseComponent implements OnIn
   }
 
   ngOnInit(): void {
+    this.buscarCurso();
+  }
+
+  buscarCurso() {
     this.curso$ = this.cursoService.buscarPorId(this.idCurso);
   }
 
@@ -55,6 +59,10 @@ export class DetalharCursoComponent extends PrivateBaseComponent implements OnIn
 
   excluir() {
 
+  }
+
+  onAulaExcluida() {
+    this.buscarCurso();
   }
 
 }

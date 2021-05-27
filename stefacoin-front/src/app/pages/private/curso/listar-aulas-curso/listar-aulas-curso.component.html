@@ -1,8 +1,10 @@
+<p-confirmDialog header="Aviso" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
 <div class="text-center-table">
-  <p-table [value]="aulas">
+  <p-table [value]="curso.aulas">
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
-          Aulas do curso {{ nomeCurso }}
+          Aulas do curso {{ curso.nome }}
       </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -13,13 +15,14 @@
         <th scope="col" *ngIf="mostrarAcoes">Ações</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-aula let-expanded="expanded">
+    <ng-template pTemplate="body" let-aula>
       <tr>
         <td>{{aula.nome}}</td>
         <td>{{aula.duracao}} dias</td>
         <td>{{aula.topicos}}</td>
         <td *ngIf="mostrarAcoes">
-          <p-button  styleClass="p-button-raised p-mr-1" title="Detalhar" icon="pi pi-info-circle" type="button"></p-button>
+          <p-button (onClick)="editar(curso.id)" styleClass="p-button-raised p-mr-1 p-button-help" title="Editar" icon="pi pi-user-edit" type="button"></p-button>
+            <p-button (onClick)="excluir(aula)" styleClass="p-button-raised p-ml-1 p-button-danger" title="Excluir" icon="pi pi-trash" type="button"></p-button>
         </td>
       </tr>
     </ng-template>

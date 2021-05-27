@@ -16,7 +16,8 @@ export default class Curso extends Entity {
 
   static include(curso: Curso): Curso {
     return {
-      ...Mapper.pick(curso, ['nome', 'descricao', 'idProfessor', 'aulas']),
+      ...Mapper.pick(curso, ['nome', 'descricao', 'idProfessor']),
+      aulas: [],
       avaliacoes: []
     } as Curso;
   }

@@ -1,3 +1,4 @@
+import { Curso } from './../../../../models/curso';
 import { Component, Injector } from '@angular/core';
 import { CrudBaseComponent } from 'src/app/components/shared/crud-base.component';
 
@@ -39,6 +40,10 @@ export class ListarProfessorComponent extends CrudBaseComponent<Professor> {
       this.toastSucesso(resposta.mensagem);
       this.listar();
     });
+  }
+
+  verCursos(cursos: Curso[]) {
+    console.log(cursos);
   }
 
 }
