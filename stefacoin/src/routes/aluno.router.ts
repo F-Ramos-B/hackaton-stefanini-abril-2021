@@ -67,7 +67,7 @@ router.put('/aluno/desmatricular/:idCurso', async (req: Request, res: Response, 
     [EnumRoles.CHECK_TIPO_ALUNO]
   );
 
-  BaseRouter.reply(() => alunoController.matricular(Number(idCurso), usuarioRequisicao.id), res, next, roles);
+  BaseRouter.reply(() => alunoController.desmatricular(Number(idCurso), usuarioRequisicao.id), res, next, roles);
 });
 
 // ----- DELETE -----

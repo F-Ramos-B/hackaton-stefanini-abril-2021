@@ -3,9 +3,15 @@
     <h1>{{curso.nome}}</h1>
     <p>{{curso.descricao}}</p>
     <p>Professor: {{ curso.professor.nome }} ({{ curso.professor.email }})</p>
+    <div *ngIf="(aluno$ | async) as aluno">
+      <hr />
+      <p>{{ isMatriculado ? 'Você está matriculado nesse curso' : 'Você não está matriculado nesse curso' }}.</p>
+      <p-button *ngIf="!isMatriculado" styleClass="p-button-raised" icon="pi pi-sign-in" type="submit" label="Matricular" (onClick)="matricular()"></p-button>
+      <p-button *ngIf="isMatriculado" styleClass="p-button-raised p-button-warning" icon="pi pi-sign-out" type="submit" label="Desvincular" (onClick)="desmatricular()"></p-button>
+    </div>
     <hr />
   </div>
-
+  
   <div class="p-col-12">
     <app-listar-aulas-curso (onAulaExcluida)="onAulaExcluida()" [mostrarAcoes]="isProfessor" [curso]="curso"></app-listar-aulas-curso>
   </div>

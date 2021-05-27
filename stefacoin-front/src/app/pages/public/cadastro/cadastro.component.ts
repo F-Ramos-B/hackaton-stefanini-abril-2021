@@ -63,7 +63,7 @@ export class CadastroComponent extends InclusaoBaseComponent implements OnInit {
   }
 
   observarMudancaTipo() {
-    this.tipo.valueChanges.pipe(takeUntil(this.ngUnsubscribe)).subscribe(valor => {
+    this.tipo.valueChanges.pipe(takeUntil(this.ngUnsubscribe$)).subscribe(valor => {
       this.isProfessor = EnumTipoUsuario.is.PROFESSOR(valor);
 
       if (this.isProfessor) {

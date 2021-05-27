@@ -9,8 +9,8 @@ import { PrivateBaseComponent } from './private-base.component';
 @Injectable()
 export abstract class InclusaoBaseComponent extends PrivateBaseComponent {
 
-  idEdicao: number;
-  abstract formulario: FormGroup;
+  public idEdicao: number;
+  public abstract formulario: FormGroup;
 
   constructor(
     protected injector: Injector
@@ -19,10 +19,10 @@ export abstract class InclusaoBaseComponent extends PrivateBaseComponent {
     this.idEdicao = this.navigationParams?.id;
   }
 
-  protected abstract validate(): void;
+  public abstract validate(): void;
   protected abstract cadastrar(): void;
   protected abstract editar(): void;
-  protected abstract voltar(): void;
+  public abstract voltar(): void;
 
   protected confirmarOperacao(resposta: Mensagem): void {
     this.toastSucesso(resposta.mensagem);

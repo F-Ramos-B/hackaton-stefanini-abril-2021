@@ -29,7 +29,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   ) { super(); }
 
   ngOnInit(): void {
-    this.router.events.pipe(filter((e) => e instanceof NavigationEnd), takeUntil(this.ngUnsubscribe)).subscribe(() => {
+    this.router.events.pipe(filter((e) => e instanceof NavigationEnd), takeUntil(this.ngUnsubscribe$)).subscribe(() => {
       this.usuario = this.authService.getUsuario();
       this.buildMenu();
     });

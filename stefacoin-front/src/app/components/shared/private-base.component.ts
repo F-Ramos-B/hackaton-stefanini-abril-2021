@@ -9,9 +9,9 @@ import { AuthService } from './../../services/auth.service';
 @Injectable()
 export abstract class PrivateBaseComponent extends BaseComponent implements OnDestroy {
 
-  usuario: UsuarioToken;
-  isProfessor: boolean;
-  navigationParams: any;
+  public usuario: UsuarioToken;
+  public isProfessor: boolean;
+  protected navigationParams: any;
 
   constructor(
     protected authService: AuthService,

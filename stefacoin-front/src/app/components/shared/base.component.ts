@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 @Injectable()
 export abstract class BaseComponent implements OnDestroy {
 
-  ngUnsubscribe = new Subject();
+  protected ngUnsubscribe$ = new Subject();
 
   protected toastSucesso(detail: string) {
     ToastService.instance.sucesso(detail);
@@ -24,8 +24,8 @@ export abstract class BaseComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 
 }

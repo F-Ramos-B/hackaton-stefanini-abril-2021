@@ -100,7 +100,7 @@ export default class AlunoController {
       throw new BusinessException('Impossível desmatricular o aluno, ele não está matriculado nesse curso no momento.');
     }
 
-    aluno.cursos.push(curso.id);
+    aluno.cursos = aluno.cursos.filter(curso => curso !== idCurso);
     await alunoRepository.alterar({ id: aluno.id }, aluno);
 
     return new Mensagem('Aluno desvinculado com sucesso!', await this.obterPorIdComCursos(aluno.id));

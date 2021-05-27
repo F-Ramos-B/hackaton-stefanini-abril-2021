@@ -9,7 +9,7 @@ import { PrivateBaseComponent } from './private-base.component';
 @Injectable()
 export abstract class CrudBaseComponent<T> extends PrivateBaseComponent implements OnInit {
 
-  dadosTabela$: Observable<T[]>;
+  public dadosTabela$: Observable<T[]>;
 
   protected confirmService: ConfirmationService;
 
@@ -25,8 +25,8 @@ export abstract class CrudBaseComponent<T> extends PrivateBaseComponent implemen
   }
 
   protected abstract listar(): void;
-  protected abstract editar(id: number): void;
-  protected abstract excluir(entity: T): void;
+  public abstract editar(id: number): void;
+  public abstract excluir(entity: T): void;
   protected abstract confirmExcluir(id: number): void;
 
 }
