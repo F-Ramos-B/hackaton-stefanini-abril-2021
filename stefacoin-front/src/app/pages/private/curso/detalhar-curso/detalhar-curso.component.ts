@@ -1,17 +1,16 @@
-import { tap } from 'rxjs/operators';
-import { AlunoService } from './../../../../services/aluno.service';
-import { Aluno } from './../../../../models/aluno';
-import { Aula } from './../../../../models/aula';
 import { Component, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { identity, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { PrivateBaseComponent } from 'src/app/components/shared/private-base.component';
 import { Curso } from 'src/app/models/curso';
+import Mensagem from 'src/app/models/mensagem';
 
-import { UsuarioToken } from './../../../../models/usuario-token';
+import { Aluno } from './../../../../models/aluno';
+import { Aula } from './../../../../models/aula';
+import { AlunoService } from './../../../../services/aluno.service';
 import { AuthService } from './../../../../services/auth.service';
 import { CursoService } from './../../../../services/curso.service';
-import Mensagem from 'src/app/models/mensagem';
 
 @Component({
   selector: 'app-detalhar-curso',
@@ -23,9 +22,8 @@ export class DetalharCursoComponent extends PrivateBaseComponent implements OnIn
   idCurso: number;
   curso$: Observable<Curso>;
   aluno$: Observable<Aluno>;
-  usuario: UsuarioToken;
-  isProfessor: boolean;
   isMatriculado: boolean;
+  nota: number;
 
   constructor(
     protected injector: Injector,
@@ -38,43 +36,36 @@ export class DetalharCursoComponent extends PrivateBaseComponent implements OnIn
 
   ngOnInit(): void {
     this.buscarCurso();
-    if (!this.isProfessor) {
-      this.buscarAluno();
-    }
+  }
+
+  buscarCurso() {
+    this.curso$ = this.cursoService.buscarPorId(this.idCurso).pipe(
+                      tap(this.isProfessor ? identity : curso => {
+                        this.nota = curso.avaliacoes.find(avaliacao => avaliacao.idAluno === this.usuario.id)?.nota;
+                        this.buscarAluno();
+                      })
+                    );
   }
 
   buscarAluno() {
     this.aluno$ = this.alunoService.buscarPorId(this.usuario.id).pipe(
-      tap(aluno => this.isMatriculado = aluno.cursos.some(curso => curso.id === this.idCurso))
-    );
+                    tap(aluno => this.isMatriculado = aluno.cursos.some(curso => curso.id === this.idCurso))
+                  );
   }
 
-  buscarCurso() {
-    this.curso$ = this.cursoService.buscarPorId(this.idCurso);
-  }
-
-  detalharAula(aula: Aula) {
-    console.log(aula);
-  }
-
-  avaliar() {
-
+  avaliar(nota: number) {
+    this.cursoService.avaliar(this.idCurso, nota)
+      .subscribe(resposta => this.toastSucesso(resposta.mensagem));
   }
 
   matricular() {
-    this.alunoService.matricular(this.idCurso).subscribe(resposta => this.confirmarOperacao(resposta));
+    this.alunoService.matricular(this.idCurso)
+      .subscribe(resposta => this.confirmarOperacao(resposta));
   }
 
   desmatricular() {
-    this.alunoService.desmatricular(this.idCurso).subscribe(resposta => this.confirmarOperacao(resposta));
-  }
-
-  editar() {
-
-  }
-
-  excluir() {
-
+    this.alunoService.desmatricular(this.idCurso)
+      .subscribe(resposta => this.confirmarOperacao(resposta));
   }
 
   confirmarOperacao(resposta: Mensagem): void {

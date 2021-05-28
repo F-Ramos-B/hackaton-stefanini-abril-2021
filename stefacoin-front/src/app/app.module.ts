@@ -8,6 +8,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -15,6 +16,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MenubarModule } from 'primeng/menubar';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
+import { RatingModule } from 'primeng/rating';
 import { RippleModule } from 'primeng/ripple';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
@@ -23,6 +25,7 @@ import { ToastModule } from 'primeng/toast';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
+import { ListarCursosUsuarioComponent } from './components/shared/listar-cursos-usuario/listar-cursos-usuario.component';
 import { MensagemValidacaoComponent } from './components/shared/mensagem-validacao/mensagem-validacao.component';
 import { AlunoGuard } from './guards/aluno.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -38,6 +41,7 @@ import { ListarProfessorComponent } from './pages/private/professor/listar-profe
 import { CadastroComponent } from './pages/public/cadastro/cadastro.component';
 import { LoginComponent } from './pages/public/login/login.component';
 import { PaginaNaoEncontradaComponent } from './pages/public/pagina-nao-encontrada/pagina-nao-encontrada.component';
+import { MostrarNotaPipe } from './pipes/mostrar-nota.pipe';
 import { TipoUsuarioPipe } from './pipes/tipo-usuario.pipe';
 
 
@@ -60,7 +64,9 @@ export function tokenGetter() {
     ListarCursoComponent,
     DetalharCursoComponent,
     IncluirCursoComponent,
-    ListarAulasCursoComponent
+    ListarAulasCursoComponent,
+    MostrarNotaPipe,
+    ListarCursosUsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +93,9 @@ export function tokenGetter() {
     ConfirmDialogModule,
     DropdownModule,
     InputTextareaModule,
-    CardModule
+    CardModule,
+    RatingModule,
+    DialogModule
   ],
   providers: [
     HttpInterceptorService,

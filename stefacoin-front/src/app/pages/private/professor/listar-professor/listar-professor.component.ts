@@ -42,8 +42,4 @@ export class ListarProfessorComponent extends CrudBaseComponent<Professor> {
     });
   }
 
-  verCursos(cursos: Curso[]) {
-    console.log(cursos);
-  }
-
 }

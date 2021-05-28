@@ -16,8 +16,8 @@ class AlunoRepository extends Repository<Aluno> {
     return super.incluir(aluno);
   }
 
-  async alterar(filtro: FilterQuery<Aluno>, aluno: Aluno) {
-    if (aluno.senha) {
+  async alterar(filtro: FilterQuery<Aluno>, aluno: Aluno, criptografarSenha: boolean = true) {
+    if (aluno.senha && criptografarSenha) {
       aluno.senha = Validador.criptografarSenha(aluno.senha);
     }
     return super.alterar(filtro, aluno);

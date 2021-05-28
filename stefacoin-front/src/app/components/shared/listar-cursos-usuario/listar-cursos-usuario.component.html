@@ -1,0 +1,38 @@
+<p-dialog header="Aulas" *ngIf="!!cursoSelecionado" [(visible)]="!!cursoSelecionado" (onHide)="esconderAulas()" [style]="{width: '75vw'}">
+  <app-listar-aulas-curso [curso]="cursoSelecionado"></app-listar-aulas-curso>
+</p-dialog>
+
+<div class="p-col-12 text-center-table" *ngIf="cursos">
+  <p-table [value]="cursos" dataKey="id" rowExpandMode="single">
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+          Cursos
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col" pSortableColumn="nome">Nome<p-sortIcon field="nome"></p-sortIcon></th>
+        <th scope="col" pSortableColumn="descricao">Descrição<p-sortIcon field="descricao"></p-sortIcon></th>
+        <th *ngIf="mostrarProfessor" scope="col" pSortableColumn="professor.nome">Professor<p-sortIcon field="professor.nome"></p-sortIcon></th>
+        <th scope="col">Aulas</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-curso let-expanded="expanded">
+      <tr>
+        <td>{{curso.nome}}</td>
+        <td>{{curso.descricao}}</td>
+        <td *ngIf="mostrarProfessor">{{curso.professor?.nome}}</td>
+        <td>
+          <p-button (onClick)="verAulas(curso)" styleClass="p-button-raised p-mr-1" title="Ver aulas" icon="pi pi-info-circle" type="button"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="mostrarProfessor ? 4 : 3">
+          Nenhum registro.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

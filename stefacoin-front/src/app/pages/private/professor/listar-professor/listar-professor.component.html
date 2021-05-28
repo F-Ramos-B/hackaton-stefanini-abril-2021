@@ -2,7 +2,7 @@
 
 <div class="p-grid" *ngIf="(dadosTabela$ | async) as professores">
   <div class="p-col-12 text-center-table">
-    <p-table [value]="professores">
+    <p-table [value]="professores" dataKey="id" rowExpandMode="single">
       <ng-template pTemplate="caption">
         <div class="p-d-flex p-ai-center p-jc-between">
             Professores
@@ -11,22 +11,29 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
+          <th scope="col" style="width: 3rem;"></th>
           <th scope="col" pSortableColumn="nome">Nome<p-sortIcon field="nome"></p-sortIcon></th>
           <th scope="col" pSortableColumn="email">E-mail<p-sortIcon field="email"></p-sortIcon></th>
-          <th scope="col">Cursos</th>
           <th scope="col" *ngIf="isProfessor">Ações</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-professor>
+      <ng-template pTemplate="body" let-professor let-expanded="expanded">
         <tr>
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="professor" *ngIf="professor?.cursos?.length" title="Mostrar cursos" class="p-button-rounded p-button-raised p-button-help" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
           <td>{{professor.nome}}</td>
           <td>{{professor.email}}</td>
-          <td>
-            <p-button *ngIf="professor?.cursos?.length" (onClick)="verCursos(professor.cursos)" title="Mostrar cursos" styleClass="p-button-raised p-button-secondary" icon="pi pi-info-circle" type="button"></p-button>
-          </td>
           <td *ngIf="isProfessor">
             <p-button (onClick)="editar(professor.id)" styleClass="p-button-raised p-mr-1 p-button-help" title="Editar" icon="pi pi-user-edit" type="button" [disabled]="professor.id !== usuario.id"></p-button>
             <p-button (onClick)="excluir(professor)" styleClass="p-button-raised p-ml-1 p-button-danger" title="Excluir" icon="pi pi-trash" type="button" [disabled]="professor.id === usuario.id"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-professor>
+        <tr>
+          <td [attr.colspan]="isProfessor ? 4 : 3" class="row-expand-interior">
+            <app-listar-cursos-usuario [mostrarProfessor]="false" [cursos]="professor.cursos"></app-listar-cursos-usuario>
           </td>
         </tr>
       </ng-template>

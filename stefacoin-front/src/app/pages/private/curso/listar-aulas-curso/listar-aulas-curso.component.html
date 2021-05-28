@@ -1,6 +1,6 @@
 <p-confirmDialog header="Aviso" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 
-<div class="text-center-table">
+<div class="text-center-table" *ngIf="curso">
   <p-table [value]="curso.aulas">
     <ng-template pTemplate="caption">
       <div class="p-d-flex p-ai-center p-jc-between">
@@ -22,7 +22,7 @@
         <td>{{aula.topicos}}</td>
         <td *ngIf="mostrarAcoes">
           <p-button (onClick)="editar(curso.id)" styleClass="p-button-raised p-mr-1 p-button-help" title="Editar" icon="pi pi-user-edit" type="button"></p-button>
-            <p-button (onClick)="excluir(aula)" styleClass="p-button-raised p-ml-1 p-button-danger" title="Excluir" icon="pi pi-trash" type="button"></p-button>
+          <p-button (onClick)="excluir(aula)" styleClass="p-button-raised p-ml-1 p-button-danger" title="Excluir" icon="pi pi-trash" type="button" [disabled]="curso?.aulas?.length <= 1"></p-button>
         </td>
       </tr>
     </ng-template>

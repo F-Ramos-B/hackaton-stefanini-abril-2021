@@ -1,4 +1,3 @@
-import { Aula } from './../../../stefacoin-front/src/app/models/aula';
 import Curso from '../entities/curso.entity';
 import Avaliacao from '../models/avaliacao.model';
 import CursoProfessor from '../models/curso-professor.model';
@@ -10,6 +9,7 @@ import BusinessException from '../utils/exceptions/business.exception';
 import Mapper from '../utils/mapper';
 import Mensagem from '../utils/mensagem';
 import { Validador } from '../utils/utils';
+import { Aula } from './../../../stefacoin-front/src/app/models/aula';
 import { TipoUsuario } from './../utils/tipo-usuario.enum';
 import AulaController from './aula.controller';
 
@@ -136,7 +136,7 @@ export default class CursoController {
     for (const aula of curso.aulas) {
       try {
         aula.idCurso = id;
-        aula.id ? await aulaController.alterar(aula.id, aula) : await aulaController.incluir(aula);
+        await (aula.id ? aulaController.alterar(aula.id, aula) : aulaController.incluir(aula));
       } catch (err: any) {
         errosAulas.push({ aula, erro: err.message });
       }

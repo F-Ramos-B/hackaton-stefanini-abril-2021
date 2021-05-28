@@ -78,7 +78,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     };
 
     if (podeIncluir) {
-      menu.items = [...this.buildSubMenuCrud(nome, podeIncluir, tipo)];
+      menu.items = [...this.buildSubMenuCrud(nome, tipo)];
     } else {
       menu.routerLink = [`/${nome}`];
     }
@@ -86,26 +86,19 @@ export class HeaderComponent extends BaseComponent implements OnInit {
     return menu;
   }
 
-  buildSubMenuCrud(nome: string, podeIncluir: boolean, tipo?: number): MenuItem[] {
-    const menuItem: MenuItem = {
-      label: 'Incluir',
-      icon: 'pi pi-fw pi-plus-circle',
-      visible: podeIncluir
-    }
-
-    if (tipo) {
-      menuItem.command = () => this.router.navigate([nome, 'incluir'], { state: { tipo } });
-    } else {
-      menuItem.routerLink = [`/${nome}/incluir`];
-    }
-
+  buildSubMenuCrud(nome: string, tipo?: number): MenuItem[] {
     return [
       {
         label: 'Listar',
         icon: 'pi pi-fw pi-list',
         routerLink: [`/${nome}`]
       },
-      menuItem
+      {
+        label: 'Incluir',
+        icon: 'pi pi-fw pi-plus-circle',
+        routerLink: [`/${nome}/incluir`],
+        state: { tipo }
+      }
     ];
   }
 

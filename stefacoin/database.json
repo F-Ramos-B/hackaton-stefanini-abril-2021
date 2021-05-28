@@ -1,1 +1,269 @@
-{"ALUNO":[],"CURSO":[{"nome":"Teste curso4","descricao":"Descrição do curso","idProfessor":3,"aulas":[],"avaliacoes":[],"id":4},{"nome":"NOVO CURSO TESTE FRONT EDIT","descricao":"TESTE FRONT EDIT","idProfessor":22,"aulas":[{"id":1,"idCurso":5,"nome":"TESTE AULA 1 EDIT","duracao":3,"topicos":["T1 A1 EDIT","T2 A1","T3 A1","T444"]},{"id":null,"idCurso":null,"nome":"AAA2","duracao":4,"topicos":["TTT1","TTT2"]},{"id":3,"nome":"AAAAABBB","duracao":3,"topicos":["afwef","wae23reaw","a3wqw3wqe"],"idCurso":5}],"avaliacoes":[],"id":5},{"nome":"afwefadsBBBBB","descricao":"awer3rAAAA","idProfessor":4,"aulas":[{"id":1,"nome":"wafsd3","duracao":3,"topicos":["TTT111","TTT222","TTT333","TTT444"],"idCurso":6},{"id":2,"nome":"CVCV","duracao":5,"topicos":["TP1","TP2"],"idCurso":6}],"avaliacoes":[],"id":6}],"USUARIO":[{"nome":"PROFESSOR ALTEREI AAABBB","email":"prof1@email.com","senha":"$2a$08$tB5PlK7eni6onw8eGy1ciOaRVjjcrF.nronAu1q9LALky2UOOclIq","tipo":1,"id":1},{"nome":"Aluno 1","formacao":"Sistema de Informacao","idade":20,"email":"aluno1@email.com","senha":"$2a$08$uK.VhIEiXvxecyTsKaV1C.WoI.IZ6gtrg.p5nIB6C8i3G/K5skmku","cursos":[6],"tipo":2,"id":2},{"nome":"Professor 2","email":"prof2@email.com","senha":"$2a$08$qCuBZCdJuK26e0f5.G8OzO87XnGSY6fAdHbfnrDPEfr18hqLWMFXC","tipo":1,"id":3},{"nome":"Professor 3","email":"prof3@email.com","senha":"$2a$08$/s9QWQ7PTzFRYwry4bXhMu2seOC9l.dSA89mzMOpZL3MAdqA1vreG","tipo":1,"id":4},{"nome":"Professor 4","email":"prof4@email.com","senha":"$2a$08$yS0z44DSysX/jfp946gMeeg9cpG25sTDW594m8qqALNnwiJxZRya6","tipo":1,"id":5},{"nome":"Professor 5","email":"prof5@email.com","senha":"$2a$08$KKwyPNCoo6SiL36gJUl8uemKp./btwUR87.bxQvmuUqwgdwsfiP7e","tipo":1,"id":6},{"nome":"Aluno 2","email":"aluno2@email.com","senha":"$2a$08$5go0w9OZfUSz/2U1XGXBv.ZF4I8S.zPmWidZ5OHLN.X06U3rm2r56","tipo":2,"idade":20,"formacao":"Ciências da Computação","cursos":[],"id":7},{"nome":"Aluno 3","email":"aluno3@email.com","senha":"$2a$08$vnfEYU/sh459B6u/omXbtOJxRbbOkegZbgJJW2Kz3DTLXOAgPN7Um","tipo":2,"idade":27,"formacao":"Ciências da Computação","cursos":[],"id":8},{"nome":"Aluno 4","email":"aluno4@email.com","senha":"$2a$08$Zu0Frzr84iwmaR49kA/z0uZRgQjZdjbo0Wd/aRZtgU7YZNVIkcO.6","tipo":2,"idade":29,"formacao":"Ciências da Computação","cursos":[],"id":9},{"nome":"Aluno 5","email":"aluno5@email.com","senha":"$2a$08$rwsQpcpC//u8aJExAQSVFO1uo./zouqzoegRDwbv55DNrT0mDx3HC","tipo":2,"idade":29,"formacao":"Ciências da Computação","cursos":[],"id":10},{"nome":"Aluno 6","email":"aluno6@email.com","senha":"$2a$08$2Vs4yswt8XP6nB.2Oga0keXyJrpwmr8NxV9r9/c8pRYAb3GL789ui","tipo":2,"idade":29,"formacao":"Ciências da Computação","cursos":[],"id":11},{"nome":"Aluno 8","email":"aluno8@email.com","senha":"$2a$08$e1wnFrSJcik3EOu7S8gdmOEFeLE7CSljYWKoEQsCKHCvxSMvyso8.","tipo":2,"idade":29,"formacao":"Ciências da Computação","cursos":[],"id":13},{"nome":"Professor 6","email":"prof6@email.com","senha":"$2a$08$X1E2QPTH6WHrwTi4egSjfeVWmYFtJFrMT0gVwlfpOfZzFfMJSYKvm","tipo":1,"id":14},{"nome":"ALUNO ALTEREI 2","email":"alunoNOVO@email.com","senha":"$2a$08$uTeSe6m7QkVH7D.A6nsM3uIUHrYak8KEvb5ys/cOvOkuGlqQGRUEK","tipo":2,"idade":25,"formacao":"Administração","cursos":[],"id":16},{"nome":"PROFESSOR NOVO","email":"profNOVAAAO@email.com","senha":"$2a$08$MOr.V1rhzZQ7OQ8RHswxJOPo/iamIZ9S3oj0aZy2u560Aju8Y88NW","tipo":1,"id":17},{"nome":"Professor NOVO","email":"professorNOVO@email.com","senha":"$2a$08$6f9tBVooMvY9H10KqNAUmOH2vUD9O4cMTS8yA6randuzwFspWb8Wi","tipo":1,"id":19},{"nome":"ALUNO NOVO","email":"alunoNOVOCCCC@email.com","senha":"$2a$08$cORMpRMx36UkXA1wdFLkRe6SyZs0f8F2/4SZI.nCcYMxVokz.qaXe","tipo":2,"idade":20,"formacao":"Ciências da Computação","cursos":[],"id":20},{"nome":"Professor NOVO DFSF","email":"professorNOVOasdfwe@email.com","senha":"$2a$08$BfIeqhQWv1rlHo2rEOUlhu.zb9nOMj09hJMQ/ZcOoTZ70pvivzm/e","tipo":1,"id":21},{"nome":"Professor Front","email":"front1@email.com","senha":"$2a$08$4cLpOkZrAQ0aG70lvHNs9egvKwS6JM7ah.gDkoGWj0NrndVYtXNne","tipo":1,"id":22},{"nome":"Aluno Front","email":"alunofront@email.com","senha":"$2a$08$AWpkqGa/5864haMi4PpGZ.vAkGkDcMfGRZ.siS3uZJc7IX5BK4uga","tipo":2,"idade":26,"formacao":"ADM","cursos":[],"id":23}]}
+{
+  "ALUNO": [],
+  "CURSO": [
+    {
+      "nome": "Teste curso4",
+      "descricao": "Descrição do curso",
+      "idProfessor": 3,
+      "aulas": [
+        {
+          "id": 1,
+          "idCurso": 4,
+          "nome": "TESTEFDSF AULA 1 EDIT",
+          "duracao": 2,
+          "topicos": [
+            "T1aw A1 EDIT",
+            "T2 vdsAds1",
+            "T3vsd ecwA1",
+            "T44fsd4"
+          ]
+        }
+      ],
+      "avaliacoes": [],
+      "id": 4
+    },
+    {
+      "nome": "NOVO CURSO TESTE FRONT EDIT",
+      "descricao": "TESTE FRONT EDIT",
+      "idProfessor": 22,
+      "aulas": [
+        {
+          "id": 1,
+          "idCurso": 5,
+          "nome": "TESTE AULA 1 EDIT",
+          "duracao": 3,
+          "topicos": [
+            "T1 A1 EDIT",
+            "T2 A1",
+            "T3 A1",
+            "T444"
+          ]
+        },
+        {
+          "id": null,
+          "idCurso": null,
+          "nome": "AAA2",
+          "duracao": 4,
+          "topicos": [
+            "TTT1",
+            "TTT2"
+          ]
+        },
+        {
+          "id": 3,
+          "nome": "AAAAABBB",
+          "duracao": 3,
+          "topicos": [
+            "afwef",
+            "wae23reaw",
+            "a3wqw3wqe"
+          ],
+          "idCurso": 5
+        }
+      ],
+      "avaliacoes": [],
+      "id": 5
+    },
+    {
+      "nome": "afwefadsBBBBB",
+      "descricao": "awer3rAAAA",
+      "idProfessor": 4,
+      "aulas": [
+        {
+          "id": 1,
+          "nome": "wafsd3",
+          "duracao": 3,
+          "topicos": [
+            "TTT111",
+            "TTT222",
+            "TTT333",
+            "TTT444"
+          ],
+          "idCurso": 6
+        }
+      ],
+      "avaliacoes": [
+        {
+          "idAluno": 2,
+          "nota": 4
+        }
+      ],
+      "id": 6
+    }
+  ],
+  "USUARIO": [
+    {
+      "nome": "PROFESSOR ALTEREI AAABBB",
+      "email": "prof1@email.com",
+      "senha": "$2a$08$tB5PlK7eni6onw8eGy1ciOaRVjjcrF.nronAu1q9LALky2UOOclIq",
+      "tipo": 1,
+      "id": 1
+    },
+    {
+      "nome": "Aluno 1",
+      "formacao": "Sistema de Informacao",
+      "idade": 20,
+      "email": "aluno1@email.com",
+      "senha": "$2a$08$qCuBZCdJuK26e0f5.G8OzO87XnGSY6fAdHbfnrDPEfr18hqLWMFXC",
+      "cursos": [
+        6,
+        5
+      ],
+      "tipo": 2,
+      "id": 2
+    },
+    {
+      "nome": "Professor 2",
+      "email": "prof2@email.com",
+      "senha": "$2a$08$qCuBZCdJuK26e0f5.G8OzO87XnGSY6fAdHbfnrDPEfr18hqLWMFXC",
+      "tipo": 1,
+      "id": 3
+    },
+    {
+      "nome": "Professor 3",
+      "email": "prof3@email.com",
+      "senha": "$2a$08$/s9QWQ7PTzFRYwry4bXhMu2seOC9l.dSA89mzMOpZL3MAdqA1vreG",
+      "tipo": 1,
+      "id": 4
+    },
+    {
+      "nome": "Professor 4",
+      "email": "prof4@email.com",
+      "senha": "$2a$08$yS0z44DSysX/jfp946gMeeg9cpG25sTDW594m8qqALNnwiJxZRya6",
+      "tipo": 1,
+      "id": 5
+    },
+    {
+      "nome": "Professor 5",
+      "email": "prof5@email.com",
+      "senha": "$2a$08$KKwyPNCoo6SiL36gJUl8uemKp./btwUR87.bxQvmuUqwgdwsfiP7e",
+      "tipo": 1,
+      "id": 6
+    },
+    {
+      "nome": "Aluno 2",
+      "email": "aluno2@email.com",
+      "senha": "$2a$08$5go0w9OZfUSz/2U1XGXBv.ZF4I8S.zPmWidZ5OHLN.X06U3rm2r56",
+      "tipo": 2,
+      "idade": 20,
+      "formacao": "Ciências da Computação",
+      "cursos": [],
+      "id": 7
+    },
+    {
+      "nome": "Aluno 3",
+      "email": "aluno3@email.com",
+      "senha": "$2a$08$vnfEYU/sh459B6u/omXbtOJxRbbOkegZbgJJW2Kz3DTLXOAgPN7Um",
+      "tipo": 2,
+      "idade": 27,
+      "formacao": "Ciências da Computação",
+      "cursos": [],
+      "id": 8
+    },
+    {
+      "nome": "Aluno 4",
+      "email": "aluno4@email.com",
+      "senha": "$2a$08$Zu0Frzr84iwmaR49kA/z0uZRgQjZdjbo0Wd/aRZtgU7YZNVIkcO.6",
+      "tipo": 2,
+      "idade": 29,
+      "formacao": "Ciências da Computação",
+      "cursos": [],
+      "id": 9
+    },
+    {
+      "nome": "Aluno 5",
+      "email": "aluno5@email.com",
+      "senha": "$2a$08$rwsQpcpC//u8aJExAQSVFO1uo./zouqzoegRDwbv55DNrT0mDx3HC",
+      "tipo": 2,
+      "idade": 29,
+      "formacao": "Ciências da Computação",
+      "cursos": [],
+      "id": 10
+    },
+    {
+      "nome": "Aluno 6",
+      "email": "aluno6@email.com",
+      "senha": "$2a$08$2Vs4yswt8XP6nB.2Oga0keXyJrpwmr8NxV9r9/c8pRYAb3GL789ui",
+      "tipo": 2,
+      "idade": 29,
+      "formacao": "Ciências da Computação",
+      "cursos": [],
+      "id": 11
+    },
+    {
+      "nome": "Aluno 8",
+      "email": "aluno8@email.com",
+      "senha": "$2a$08$e1wnFrSJcik3EOu7S8gdmOEFeLE7CSljYWKoEQsCKHCvxSMvyso8.",
+      "tipo": 2,
+      "idade": 29,
+      "formacao": "Ciências da Computação",
+      "cursos": [],
+      "id": 13
+    },
+    {
+      "nome": "Professor 6",
+      "email": "prof6@email.com",
+      "senha": "$2a$08$X1E2QPTH6WHrwTi4egSjfeVWmYFtJFrMT0gVwlfpOfZzFfMJSYKvm",
+      "tipo": 1,
+      "id": 14
+    },
+    {
+      "nome": "ALUNO ALTEREI 2",
+      "email": "alunoNOVO@email.com",
+      "senha": "$2a$08$uTeSe6m7QkVH7D.A6nsM3uIUHrYak8KEvb5ys/cOvOkuGlqQGRUEK",
+      "tipo": 2,
+      "idade": 25,
+      "formacao": "Administração",
+      "cursos": [],
+      "id": 16
+    },
+    {
+      "nome": "PROFESSOR NOVO",
+      "email": "profNOVAAAO@email.com",
+      "senha": "$2a$08$MOr.V1rhzZQ7OQ8RHswxJOPo/iamIZ9S3oj0aZy2u560Aju8Y88NW",
+      "tipo": 1,
+      "id": 17
+    },
+    {
+      "nome": "Professor NOVO",
+      "email": "professorNOVO@email.com",
+      "senha": "$2a$08$6f9tBVooMvY9H10KqNAUmOH2vUD9O4cMTS8yA6randuzwFspWb8Wi",
+      "tipo": 1,
+      "id": 19
+    },
+    {
+      "nome": "ALUNO NOVO",
+      "email": "alunoNOVOCCCC@email.com",
+      "senha": "$2a$08$cORMpRMx36UkXA1wdFLkRe6SyZs0f8F2/4SZI.nCcYMxVokz.qaXe",
+      "tipo": 2,
+      "idade": 20,
+      "formacao": "Ciências da Computação",
+      "cursos": [],
+      "id": 20
+    },
+    {
+      "nome": "Professor NOVO DFSF",
+      "email": "professorNOVOasdfwe@email.com",
+      "senha": "$2a$08$BfIeqhQWv1rlHo2rEOUlhu.zb9nOMj09hJMQ/ZcOoTZ70pvivzm/e",
+      "tipo": 1,
+      "id": 21
+    },
+    {
+      "nome": "Professor Front",
+      "email": "front1@email.com",
+      "senha": "$2a$08$4cLpOkZrAQ0aG70lvHNs9egvKwS6JM7ah.gDkoGWj0NrndVYtXNne",
+      "tipo": 1,
+      "id": 22
+    },
+    {
+      "nome": "Aluno Front",
+      "email": "alunofront@email.com",
+      "senha": "$2a$08$AWpkqGa/5864haMi4PpGZ.vAkGkDcMfGRZ.siS3uZJc7IX5BK4uga",
+      "tipo": 2,
+      "idade": 26,
+      "formacao": "ADM",
+      "cursos": [],
+      "id": 23
+    }
+  ]
+}

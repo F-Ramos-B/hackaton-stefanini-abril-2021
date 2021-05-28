@@ -12,7 +12,7 @@ import { AulaService } from './../../../../services/aula.service';
   templateUrl: './listar-aulas-curso.component.html',
   styleUrls: ['./listar-aulas-curso.component.scss']
 })
-export class ListarAulasCursoComponent extends BaseComponent implements OnInit {
+export class ListarAulasCursoComponent extends BaseComponent {
 
   @Input() mostrarAcoes: boolean;
   @Input() curso: Curso;
@@ -23,9 +23,6 @@ export class ListarAulasCursoComponent extends BaseComponent implements OnInit {
     private confirmService: ConfirmationService,
     private aulaService: AulaService
   ) { super(); }
-
-  ngOnInit(): void {
-  }
 
   editar(id: number) {
     this.router.navigate(['cursos', 'editar'], { state: { id } });

@@ -34,5 +34,5 @@ export const Validador = {
 
   criptografarSenha: (senha: string): string => {
     return bcrypt.hashSync(senha, 8);
-  },
+  }
 };

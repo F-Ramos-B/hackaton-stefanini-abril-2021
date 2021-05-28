@@ -9,6 +9,7 @@ import UsuarioCursos from '../models/user-cursos.model';
 import CadastroController from './cadastro.controller';
 import Mapper from '../utils/mapper';
 import BusinessException from '../utils/exceptions/business.exception';
+import CursoController from './curso.controller';
 
 const cadastroController = new CadastroController();
 export default class AlunoController {
@@ -32,7 +33,7 @@ export default class AlunoController {
     Validador.validarParametros([{ id }]);
 
     const aluno = await this.obterPorId(id);
-    const cursos = await cursoRepository.listar({ id: { $in: aluno.cursos } });
+    const cursos = await new CursoController().listarComProfessor({ id: { $in: aluno.cursos } });
 
     return new UsuarioCursos<Aluno>(aluno, cursos);
   }
@@ -40,7 +41,7 @@ export default class AlunoController {
   async listarComCursos(filtro: FilterQuery<Aluno> = {}): Promise<UsuarioCursos<Aluno>[]> {
     const alunos = await this.listar(filtro);
 
-    const cursos = await cursoRepository.listar({ id: { $in: alunos.flatMap(aluno => aluno.cursos) } });
+    const cursos = await new CursoController().listarComProfessor({ id: { $in: alunos.flatMap(aluno => aluno.cursos) } });
 
     return alunos.map(aluno => new UsuarioCursos<Aluno>(aluno, cursos.filter(curso => aluno.cursos.includes(curso.id))));
   }
@@ -85,7 +86,7 @@ export default class AlunoController {
     }
 
     aluno.cursos.push(curso.id);
-    await alunoRepository.alterar({ id: aluno.id }, aluno);
+    await alunoRepository.alterar({ id: aluno.id }, aluno, false);
 
     return new Mensagem('Aluno matriculado com sucesso!', await this.obterPorIdComCursos(aluno.id));
   }
@@ -101,7 +102,7 @@ export default class AlunoController {
     }
 
     aluno.cursos = aluno.cursos.filter(curso => curso !== idCurso);
-    await alunoRepository.alterar({ id: aluno.id }, aluno);
+    await alunoRepository.alterar({ id: aluno.id }, aluno, false);
 
     return new Mensagem('Aluno desvinculado com sucesso!', await this.obterPorIdComCursos(aluno.id));
   }

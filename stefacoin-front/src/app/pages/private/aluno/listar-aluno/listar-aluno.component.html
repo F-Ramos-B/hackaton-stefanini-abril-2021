@@ -2,7 +2,7 @@
 
 <div class="p-grid" *ngIf="(dadosTabela$ | async) as alunos">
   <div class="p-col-12 text-center-table">
-    <p-table [value]="alunos">
+    <p-table [value]="alunos" dataKey="id" rowExpandMode="single">
       <ng-template pTemplate="caption">
         <div class="p-d-flex p-ai-center p-jc-between">
             Alunos
@@ -11,26 +11,33 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
+          <th scope="col" style="width: 3rem;"></th>
           <th scope="col" pSortableColumn="nome">Nome<p-sortIcon field="nome"></p-sortIcon></th>
           <th scope="col" pSortableColumn="email">E-mail<p-sortIcon field="email"></p-sortIcon></th>
           <th scope="col" pSortableColumn="idade">Idade<p-sortIcon field="idade"></p-sortIcon></th>
           <th scope="col" pSortableColumn="formacao">Formação<p-sortIcon field="formacao"></p-sortIcon></th>
-          <th scope="col">Cursos</th>
           <th scope="col">Ações</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-aluno>
+      <ng-template pTemplate="body" let-aluno let-expanded="expanded">
         <tr>
+          <td>
+            <button type="button" pButton pRipple [pRowToggler]="aluno" *ngIf="aluno?.cursos?.length" title="Mostrar cursos" class="p-button-rounded p-button-raised p-button-help" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+          </td>
           <td>{{aluno.nome}}</td>
           <td>{{aluno.email}}</td>
           <td>{{aluno.idade}}</td>
           <td>{{aluno.formacao}}</td>
           <td>
-            <p-button *ngIf="aluno?.cursos?.length" title="Mostrar cursos" styleClass="p-button-raised p-button-secondary" icon="pi pi-info-circle" type="button"></p-button>
-          </td>
-          <td>
             <p-button (onClick)="editar(aluno.id)" styleClass="p-button-raised p-mr-1 p-button-help" title="Editar" icon="pi pi-user-edit" type="button" [disabled]="!(aluno.id === usuario.id || isProfessor)"></p-button>
             <p-button (onClick)="excluir(aluno)" styleClass="p-button-raised p-ml-1 p-button-danger" title="Excluir" icon="pi pi-trash" type="button" [disabled]="!isProfessor"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-aluno>
+        <tr>
+          <td [attr.colspan]="6" class="row-expand-interior">
+            <app-listar-cursos-usuario [cursos]="aluno.cursos"></app-listar-cursos-usuario>
           </td>
         </tr>
       </ng-template>

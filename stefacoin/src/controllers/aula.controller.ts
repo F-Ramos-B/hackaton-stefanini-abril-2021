@@ -7,12 +7,11 @@ import CursoController from './curso.controller';
 import NotFoundException from '../utils/exceptions/no-content.exception';
 import Mapper from '../utils/mapper';
 
-const cursoController = new CursoController();
 
 export default class AulaController {
   async obterPorId(id: number, idCurso: number, errorOnNotFound = true): Promise<Aula> {
     Validador.validarParametros([{ id }, { idCurso }]);
-    const curso = await cursoController.obterPorId(idCurso);
+    const curso = await new CursoController().obterPorId(idCurso);
     const aula = curso.aulas.find((a) => a.id === id);
 
     if (!aula && errorOnNotFound) {
@@ -24,12 +23,12 @@ export default class AulaController {
 
   async listar(idCurso: number): Promise<Aula[]> {
     Validador.validarParametros([{ idCurso }]);
-    const curso = await cursoController.obterPorId(idCurso);
+    const curso = await new CursoController().obterPorId(idCurso);
     return curso.aulas;
   }
 
   async listarTodasAulas(): Promise<Aula[]> {
-    const cursos = await cursoController.listar();
+    const cursos = await new CursoController().listar();
     return cursos.flatMap(curso => curso.aulas);
   }
 
@@ -39,7 +38,7 @@ export default class AulaController {
 
     this.verificarTopicos(aula.topicos);
 
-    const curso = await cursoController.obterPorId(idCurso);
+    const curso = await new CursoController().obterPorId(idCurso);
 
     if (curso.aulas.some(aula => aula.nome === nome)) {
       throw new BusinessException('Já existe uma aula nesse curso com esse mesmo nome.');
@@ -85,10 +84,12 @@ export default class AulaController {
 
   async excluir(id: number, idCurso: number) {
     Validador.validarParametros([{ id }, { idCurso }]);
-    const curso = await cursoController.obterPorId(idCurso);
+    const curso = await new CursoController().obterPorId(idCurso);
 
     if (!curso.aulas.some(aula => aula.id === id)) {
       throw new NotFoundException(`Não foi localizado uma aula de id ${id}.`);
+    } else if (curso.aulas.length <= 1) {
+      throw new BusinessException(`Não é permitido excluir a última aula de um curso.`);
     }
 
     curso.aulas = curso.aulas.filter((a) => a.id !== id);
@@ -98,7 +99,9 @@ export default class AulaController {
   }
 
   private verificarTopicos(topicos: string[]): void {
-    if (topicos.length !== new Set<any>(topicos).size) {
+    if (!topicos?.length) {
+      throw new BusinessException('A aula deve possuir ao menos 1 tópico.');
+    } else if (topicos.length !== new Set<any>(topicos).size) {
       throw new BusinessException('Existem tópicos com nomes iguais nessa aula.');
     }
   }

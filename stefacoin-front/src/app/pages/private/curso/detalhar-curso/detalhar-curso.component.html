@@ -1,10 +1,12 @@
 <div class="p-grid" *ngIf="(curso$ | async) as curso">
   <div class="p-col-12">
-    <h1>{{curso.nome}}</h1>
-    <p>{{curso.descricao}}</p>
-    <p>Professor: {{ curso.professor.nome }} ({{ curso.professor.email }})</p>
+    <h1>Curso {{curso.nome}}</h1>
+    <h5>Professor: {{ curso.professor.nome }} ({{ curso.professor.email }})</h5>
+    <p>Descrição: {{curso.descricao}}</p>
     <div *ngIf="(aluno$ | async) as aluno">
       <hr />
+      <p>{{ nota | mostrarNota }}</p>
+      <p-rating (onRate)="avaliar($event.value)" [(ngModel)]="nota" [cancel]="false"></p-rating>
       <p>{{ isMatriculado ? 'Você está matriculado nesse curso' : 'Você não está matriculado nesse curso' }}.</p>
       <p-button *ngIf="!isMatriculado" styleClass="p-button-raised" icon="pi pi-sign-in" type="submit" label="Matricular" (onClick)="matricular()"></p-button>
       <p-button *ngIf="isMatriculado" styleClass="p-button-raised p-button-warning" icon="pi pi-sign-out" type="submit" label="Desvincular" (onClick)="desmatricular()"></p-button>

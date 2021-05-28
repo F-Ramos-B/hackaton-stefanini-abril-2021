@@ -36,7 +36,7 @@
       <ng-template pTemplate="rowexpansion" let-curso>
         <tr>
           <td [attr.colspan]="5" class="row-expand-interior">
-            <app-listar-aulas-curso (onAulaExcluida)="onAulaExcluida()" [curso]="curso"></app-listar-aulas-curso>
+            <app-listar-aulas-curso [curso]="curso"></app-listar-aulas-curso>
           </td>
         </tr>
       </ng-template>
