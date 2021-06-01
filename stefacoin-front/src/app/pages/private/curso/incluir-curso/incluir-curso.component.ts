@@ -51,7 +51,7 @@ export class IncluirCursoComponent extends InclusaoBaseComponent implements OnIn
   }
 
   validate() {
-    FormUtils.forceValidateAllFormFields(this.formulario, null, false);
+    FormUtils.forceValidateForm(this.formulario, null, false);
     const erros = FormUtils.achatarErros(this.formulario);
 
     if (erros) {

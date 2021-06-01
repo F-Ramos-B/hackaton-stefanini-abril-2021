@@ -4,31 +4,31 @@ import { ToastService } from './../services/toast.service';
 
 export abstract class FormUtils {
 
-  static forceValidateAllFormFields(formGroup: FormGroup | FormArray, callBackIfValid: () => void = null, toast: boolean = true) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
+  static forceValidateAllFormFields(form: FormGroup | FormArray) {
+    Object.keys(form.controls).forEach(field => {
+      const control = form.get(field);
       if (control instanceof FormControl && control.enabled) {
         control.markAsTouched({ onlySelf: true });
         control.markAsDirty({ onlySelf: true });
       } else if (control instanceof FormGroup) {
-        this.forceValidateAllFormFields(control, null, false);
+        this.forceValidateAllFormFields(control);
       } else if (control instanceof FormArray) {
         for (const item of control.controls) {
           if (item instanceof FormGroup || item instanceof FormArray) {
-            this.forceValidateAllFormFields(item, null, false);
-          } else if (item instanceof FormControl) {
+            this.forceValidateAllFormFields(item);
+          } else if (item instanceof FormControl && control.enabled) {
             item.markAsTouched({ onlySelf: true });
             item.markAsDirty({ onlySelf: true });
           }
         }
       }
     });
-
-    FormUtils.verificarValidade(formGroup, callBackIfValid, toast);
   }
 
-  private static verificarValidade(formGroup: FormGroup | FormArray, callBackIfValid: () => void, toast: boolean) {
-    if (formGroup.valid) {
+  static forceValidateForm(form: FormGroup | FormArray, callBackIfValid: () => void = null, toast: boolean = true) {
+    this.forceValidateAllFormFields(form);
+
+    if (form.valid) {
       if (callBackIfValid) {
         callBackIfValid();
       }

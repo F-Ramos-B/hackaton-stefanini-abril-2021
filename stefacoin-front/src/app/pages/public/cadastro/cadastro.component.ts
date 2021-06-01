@@ -48,7 +48,7 @@ export class CadastroComponent extends InclusaoBaseComponent implements OnInit {
 
   validate() {
     const operacao = this.idEdicao ? this.editar.bind(this) : this.cadastrar.bind(this);
-    FormUtils.forceValidateAllFormFields(this.formulario, operacao);
+    FormUtils.forceValidateForm(this.formulario, operacao);
   }
 
   cadastrar() {

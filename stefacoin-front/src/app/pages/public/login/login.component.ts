@@ -26,7 +26,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   ngOnInit(): void { }
 
   validate() {
-    FormUtils.forceValidateAllFormFields(this.loginForm, this.login.bind(this));
+    FormUtils.forceValidateForm(this.loginForm, this.login.bind(this));
   }
 
   login() {
