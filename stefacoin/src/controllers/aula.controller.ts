@@ -36,6 +36,7 @@ export default class AulaController {
     const { nome, duracao, topicos, idCurso } = aula;
     Validador.validarParametros([{ nome }, { duracao }, { topicos }, { idCurso }]);
 
+    this.verificarDuracao(duracao);
     this.verificarTopicos(aula.topicos);
 
     const curso = await new CursoController().obterPorId(idCurso);
@@ -58,6 +59,7 @@ export default class AulaController {
     const { nome, duracao, topicos, idCurso } = aula;
     Validador.validarParametros([{ id }, { idCurso }, { nome }, { duracao }, { topicos }]);
 
+    this.verificarDuracao(duracao);
     this.verificarTopicos(aula.topicos);
 
     const curso = await CursoRepository.obterPorId(idCurso);
@@ -101,8 +103,14 @@ export default class AulaController {
   private verificarTopicos(topicos: string[]): void {
     if (!topicos?.length) {
       throw new BusinessException('A aula deve possuir ao menos 1 tópico.');
-    } else if (topicos.length !== new Set<any>(topicos).size) {
+    } else if (topicos.length !== new Set<string>(topicos).size) {
       throw new BusinessException('Existem tópicos com nomes iguais nessa aula.');
+    }
+  }
+
+  private verificarDuracao(duracao: number) {
+    if (duracao < 1 || duracao > 25) {
+      throw new BusinessException('A aula deve ter duração de 1 a 25 dias.');
     }
   }
 }

@@ -4,6 +4,13 @@ import RoleCheck from '../models/role.model';
 import UnauthorizedException from '../utils/exceptions/unauthorized.exception';
 
 export default class BaseRouter {
+  /**
+   * Método usado por todos os routers que encapsula as funções das controllers em um try catch, tratando sucesso e erro em um único lugar.
+   * @param action Função de alguma controller que será executada dentro do escopo do try catch. O retorno dela será devolvido como JSON em res.json().
+   * @param res Objeto response.
+   * @param next Objeto next.
+   * @param roleCheck Objeto opcional com dados de permissão pra tal operação que serão checadas com o token do usuário que fez a requisição.
+   */
   static async reply<T>(action: () => Promise<T>, res: Response, next: NextFunction, roleCheck?: RoleCheck) {
     try {
       if (roleCheck) {
