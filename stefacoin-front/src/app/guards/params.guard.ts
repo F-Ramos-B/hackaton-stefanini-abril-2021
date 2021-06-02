@@ -19,11 +19,11 @@ export class ParamsGuard {
         return this.hasParams();
       }
 
-      canActivateChild() {
+      canActivateChild(): boolean {
         return this.hasParams();
       }
 
-      hasParams() {
+      hasParams(): boolean {
         const extras = this.router.getCurrentNavigation()?.extras?.state;
 
         if (!extras) {
@@ -31,7 +31,7 @@ export class ParamsGuard {
           return false;
         }
 
-        return requiredParams[requireAll ? 'every' : 'some'](key => key in extras);
+        return requiredParams[requireAll ? 'every' : 'some'](key => key in extras && extras[key]);
       }
     }
 

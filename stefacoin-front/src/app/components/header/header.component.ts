@@ -97,7 +97,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
         label: 'Incluir',
         icon: 'pi pi-fw pi-plus-circle',
         routerLink: [`/${nome}/incluir`],
-        state: { tipo }
+        state: tipo ? { tipo } : null
       }
     ];
   }
