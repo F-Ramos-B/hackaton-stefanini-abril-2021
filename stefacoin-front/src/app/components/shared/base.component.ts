@@ -8,19 +8,19 @@ export abstract class BaseComponent implements OnDestroy {
   protected ngUnsubscribe$ = new Subject();
 
   protected toastSucesso(detail: string) {
-    ToastService.instance.sucesso(detail);
+    ToastService.getInstance().sucesso(detail);
   }
 
   protected toastAviso(detail: string) {
-    ToastService.instance.aviso(detail);
+    ToastService.getInstance().aviso(detail);
   }
 
   protected toastErro(detail: string) {
-    ToastService.instance.erro(detail);
+    ToastService.getInstance().erro(detail);
   }
 
   protected toastMensagem(summary: string, detail: string, severity: string) {
-    ToastService.instance.mensagem(summary, detail, severity);
+    ToastService.getInstance().mensagem(summary, detail, severity);
   }
 
   ngOnDestroy() {

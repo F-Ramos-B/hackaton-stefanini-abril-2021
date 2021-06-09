@@ -34,7 +34,7 @@ export abstract class FormUtils {
       }
     } else {
       if (toast) {
-        ToastService.instance.aviso('Preencha os campos obrigatórios.');
+        ToastService.getInstance().aviso('Preencha os campos obrigatórios.');
       }
     }
   }

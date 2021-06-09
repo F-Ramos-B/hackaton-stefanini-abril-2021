@@ -25,7 +25,7 @@ export class HttpInterceptorService implements HttpInterceptor {
       // Exibir toast automaticamente em caso de erro
       catchError((err: HttpErrorMensagem<MensagemErro>) => {
         const mensagem = err?.error?.message || err?.message || 'Erro desconhecido';
-        ToastService.instance.erro(mensagem);
+        ToastService.getInstance().erro(mensagem);
         return throwError(err);
       }));
   }
