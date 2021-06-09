@@ -8,14 +8,14 @@ export class ToastService {
 
   private readonly TEMPO_TOAST_MS = 5000;
 
-  private static instance: ToastService;
+  private static singleton: ToastService;
 
   private constructor(private messageService: MessageService) {
-    ToastService.instance = this;
+    ToastService.singleton = this;
   }
 
   public static getInstance(): ToastService {
-    return this.instance;
+    return this.singleton;
   }
 
   init() {
